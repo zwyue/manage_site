@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.AuthMapper" >
+    <!--<resultMap id="UserDetail" type="com.zr.gansu.common.auth.UserDetail">-->
+        <!--<id column="id" property="id" jdbcType="BIGINT" />-->
+        <!--<result column="login_name" property="loginName" jdbcType="VARCHAR" />-->
+        <!--<result column="name" property="name" jdbcType="VARCHAR" />-->
+        <!--<result column="nick_name" property="nickName" jdbcType="VARCHAR" />-->
+        <!--<result column="password" property="password" jdbcType="VARCHAR" />-->
+    <!--</resultMap>-->
+    <resultMap id="BaseResultMap" type="com.zr.gansu.common.auth.UserDetail" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="salt" property="salt" jdbcType="VARCHAR" />
+        <result column="identification_no" property="identificationNo" jdbcType="INTEGER" />
+        <result column="credit" property="credit" jdbcType="INTEGER" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="volunteer_state" property="volunteerState" jdbcType="INTEGER" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="icon" property="icon" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="age" property="age" jdbcType="INTEGER" />
+        <result column="sign" property="sign" jdbcType="VARCHAR" />
+        <result column="qq" property="qq" jdbcType="VARCHAR" />
+        <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+        <result column="site_id" property="siteId" jdbcType="BIGINT" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id, login_name, name, nick_name, password, salt, identification_no, credit,
+    city, volunteer_state, phone, icon, email, sex, age, sign, qq, wechat, gmt_create,
+    gmt_modified, is_deleted, site_id
+  </sql>
+
+
+    <!--通过loginName查询用户信息-->
+    <select id="getUserByLoginName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tbl_user WHERE login_name = #{loginName}
+    </select>
+
+    <!--通过用户Id查询用户信息-->
+    <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tbl_user WHERE id = #{userId}
+    </select>
+
+    <!--赋予用户权限-->
+    <insert id="setUserRole" parameterType="java.lang.Long" useGeneratedKeys="true" keyProperty="id" >
+       INSERT INTO tbl_user_role (user_id,role_id) VALUES (#{userId},#{roleId})
+    </insert>
+
+    <!--新增用户-->
+    <insert id="insertUser" parameterType="com.zr.gansu.common.auth.UserDetail" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="loginName != null" >
+                login_name,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="nickName != null" >
+                nick_name,
+            </if>
+            <if test="password != null" >
+                password,
+            </if>
+            <if test="salt != null" >
+                salt,
+            </if>
+            <if test="identificationNo != null" >
+                identification_no,
+            </if>
+            <if test="credit != null" >
+                credit,
+            </if>
+            <if test="city != null" >
+                city,
+            </if>
+            <if test="volunteerState != null" >
+                volunteer_state,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+            <if test="icon != null" >
+                icon,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="sex != null" >
+                sex,
+            </if>
+            <if test="age != null" >
+                age,
+            </if>
+            <if test="sign != null" >
+                sign,
+            </if>
+            <if test="qq != null" >
+                qq,
+            </if>
+            <if test="wechat != null" >
+                wechat,
+            </if>
+            <if test="gmtCreate != null" >
+                gmt_create,
+            </if>
+            <if test="gmtModified != null" >
+                gmt_modified,
+            </if>
+            <if test="isDeleted != null" >
+                is_deleted,
+            </if>
+            <if test="siteId != null" >
+                site_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="loginName != null" >
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null" >
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null" >
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="identificationNo != null" >
+                #{identificationNo,jdbcType=INTEGER},
+            </if>
+            <if test="credit != null" >
+                #{credit,jdbcType=INTEGER},
+            </if>
+            <if test="city != null" >
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="volunteerState != null" >
+                #{volunteerState,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null" >
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null" >
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="age != null" >
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="sign != null" >
+                #{sign,jdbcType=VARCHAR},
+            </if>
+            <if test="qq != null" >
+                #{qq,jdbcType=VARCHAR},
+            </if>
+            <if test="wechat != null" >
+                #{wechat,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null" >
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null" >
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null" >
+                #{isDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="siteId != null" >
+                #{siteId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+
+</mapper>

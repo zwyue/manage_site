@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.OldAgeActivityTextMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.OldAgeActivityText" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="content_text" property="contentText" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id,content_text
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_old_age_activity_text
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_old_age_activity_text
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zr.gansu.domain.OldAgeActivityText" keyProperty="id" useGeneratedKeys="true">
+    insert into tbl_old_age_activity_text (id, content_text)
+    values (#{id,jdbcType=BIGINT}, #{contentText,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.zr.gansu.domain.OldAgeActivityText" >
+    insert into tbl_old_age_activity_text
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="contentText != null" >
+        content_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="contentText != null" >
+        #{contentText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.OldAgeActivityText" >
+    update tbl_old_age_activity_text
+    <set >
+      <if test="contentText != null" >
+        content_text = #{contentText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zr.gansu.domain.OldAgeActivityText" >
+    update tbl_old_age_activity_text
+    set content_text = #{contentText,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

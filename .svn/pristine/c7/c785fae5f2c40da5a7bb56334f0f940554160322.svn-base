@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.VoteOptionMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.VoteOption" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="option" property="option" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="vote_id" property="voteId" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, `option`, content, vote_id, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_voteoption
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!--根据投票问题id查询选项-->
+  <select id="selectOptionByVoteId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_voteoption
+    where vote_id = #{voteId,jdbcType=BIGINT} and is_deleted=1
+  </select>
+
+  <!--根据问题id查询是否存在该选项-->
+  <select id="isExitOption" resultType="integer">
+    select count(0)
+    from tbl_voteoption
+    where vote_id=#{voteId,jdbcType=BIGINT} and `option`=#{optionName,jdbcType=VARCHAR} and is_deleted=1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_voteoption
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zr.gansu.domain.VoteOption" >
+    insert into tbl_voteoption (id, `option`, content,
+      vote_id,gmt_create, gmt_modified,
+      is_deleted)
+    values (#{id,jdbcType=BIGINT}, #{option,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{voteId,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+      #{isDeleted,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zr.gansu.domain.VoteOption" >
+    insert into tbl_voteoption
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="option!= null" >
+        `option`,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="voteId != null" >
+        vote_id,
+      </if>
+
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null" >
+       is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="option != null" >
+        #{option,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="voteId != null" >
+        #{voteId,jdbcType=BIGINT},
+      </if>
+
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.VoteOption" >
+    update tbl_voteoption
+    <set >
+      <if test="option != null" >
+        `option` = #{option,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="voteId != null" >
+        vote_id = #{voteId,jdbcType=BIGINT},
+      </if>
+
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zr.gansu.domain.VoteOption" >
+    update tbl_voteoption
+    set `option` = #{option,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      vote_id = #{voteId,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

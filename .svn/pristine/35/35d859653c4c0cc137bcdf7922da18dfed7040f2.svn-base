@@ -1,0 +1,2 @@
+logging.config=classpath:log/logback-spring-test.xml
+logging.path=D:\\log\\web

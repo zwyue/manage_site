@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<title>活动查看</title>
+		<div th:replace="/common/publicX-admin :: onloadJS">
+
+		</div>
+	</head>
+	<body>
+		<!--<p class="name">你好：<span>管理员</span></p>-->
+		<div class="activ_look">
+			<div class="look_one">
+				 <div class="div1">
+				 	活动名称：<input type="text" id="title"/>
+
+				 </div>
+				<div class="div2">
+					<p class="p1" onclick="chaxun()">查询</p>
+					<p class="chongz">重置</p>
+				</div>
+
+
+			</div>
+			<div class="look_two">
+				<div class="account_table">
+					<div class="table_herd">
+						<p class="p1">活动列表</p>
+						<p class="p2" onclick="x_admin_show('活动新增','/admin/jump/activity/add')">新增</p>
+					</div>
+					<div class="layui-table table">
+						<table>
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>活动名称</th>
+                                    <th>开始时间</th>
+									<th>结束时间</th>
+                                    <th>活动发起人</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activityList">
+
+                            </tbody>
+						</table>
+					</div>
+                    <!--分页-->
+					<div class="page" style="text-align: center;margin-top: 20px;">
+                        <div id="demo5"></div>
+					</div>
+                    <!--分页end-->
+ 				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="../static/js/activity_look.js" th:src="@{/js/activity_look.js}"></script>
+		<script type="text/javascript" src="../static/dateJs/dateUtil.js" th:src="@{/dateJs/dateUtil.js}"></script>
+		<script>
+
+			$('.chongz').click(function () {
+				$('#title').val("")
+			})
+		</script>
+
+	</body>
+</html>

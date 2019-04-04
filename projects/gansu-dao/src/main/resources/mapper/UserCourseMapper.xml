@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.UserCourseMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.UserCourse" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="course_id" property="courseId" jdbcType="BIGINT" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="percent" property="percent" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, course_id, add_time, status, percent, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_user_course
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!--查询是否参与该课程的学习-->
+  <select id="queryByCourseId" resultType="integer">
+      select count(0) from tbl_user_course
+      where user_id=#{userId,jdbcType=BIGINT} and course_id=#{courseId,jdbcType=BIGINT} and is_deleted = 1
+  </select>
+  <!--查询该课程的学习-->
+  <select id="selectByCourseIdAndUserId" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from tbl_user_course
+      where user_id=#{userId,jdbcType=BIGINT} and course_id=#{courseId,jdbcType=BIGINT} and is_deleted = 1
+  </select>
+  <!--查询用户加入学习的所有课程-->
+  <select id="selectByUserId" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from tbl_user_course
+      where user_id=#{userId,jdbcType=BIGINT} and is_deleted = 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_user_course
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zr.gansu.domain.UserCourse" >
+    insert into tbl_user_course (id, user_id, course_id, 
+      add_time, status, percent, 
+      gmt_create, gmt_modified, is_deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{courseId,jdbcType=BIGINT}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{percent,jdbcType=INTEGER}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zr.gansu.domain.UserCourse" >
+    insert into tbl_user_course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="courseId != null" >
+        course_id,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="percent != null" >
+        percent,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null" >
+        #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="percent != null" >
+        #{percent,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.UserCourse" >
+    update tbl_user_course
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null" >
+        course_id = #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="percent != null" >
+        percent = #{percent,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zr.gansu.domain.UserCourse" >
+    update tbl_user_course
+    set user_id = #{userId,jdbcType=BIGINT},
+      course_id = #{courseId,jdbcType=BIGINT},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      percent = #{percent,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

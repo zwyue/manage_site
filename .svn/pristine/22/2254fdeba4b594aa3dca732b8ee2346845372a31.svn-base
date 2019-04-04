@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>甘肃社区教育网后台管理系统</title>
+  <link rel="stylesheet" href="../static/layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">
+    	<img src="../static/img/LOGO1.png" style="width: 200px;"/>
+    </div>
+    
+    <ul class="layui-nav layui-layout-left">
+      <li class="layui-nav-item"><a href="">控制台</a></li>
+      <li class="layui-nav-item"><a href="">商品管理</a></li>
+      <li class="layui-nav-item"><a href="">用户</a></li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">其它系统</a>
+        <dl class="layui-nav-child">
+          <dd><a href="">邮件管理</a></dd>
+          <dd><a href="">消息管理</a></dd>
+          <dd><a href="">授权管理</a></dd>
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          贤心
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+          <dd><a href="">安全设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="">退了</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+      	
+       <li class="layui-nav-item"><a href="javascript:;">账号管理</a></li>
+        
+        
+        <li class="layui-nav-item">
+          <a href="javascript:;">首页管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">新闻资讯</a></dd>
+            <dd><a href="javascript:;">通知公告</a></dd>
+            <dd><a href="javascript:;">艺术展示</a></dd>
+            <dd><a href="javascript:;">图文资源</a></dd>
+            <dd><a href="javascript:;">视频课程</a></dd>
+          </dl>
+        </li>
+        
+        <li class="layui-nav-item">
+          <a href="javascript:;">课程管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">课程排版</a></dd>
+            <dd><a href="javascript:;">课程审批</a></dd>
+            <dd><a href="javascript:;">课程下架</a></dd>
+            <dd><a href="javascript:;">资源统计</a></dd>
+            
+          </dl>
+        </li>
+        
+        <li class="layui-nav-item">
+          <a href="javascript:;">直播管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">直播间解禁</a></dd>
+            <dd><a href="javascript:;">直播间封禁</a></dd>
+            <dd><a href="javascript:;">直播间审批</a></dd>
+          </dl>
+        </li>
+        
+        <li class="layui-nav-item">
+          <a href="javascript:;">商品管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">商城排版</a></dd>
+            <dd><a href="javascript:;">订单处理</a></dd>
+            <dd><a href="javascript:;">商品处理</a></dd>
+          </dl>
+        </li>
+        
+        <li class="layui-nav-item">
+          <a href="javascript:;">资源管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">志愿者审批</a></dd>
+            <dd><a href="javascript:;">教师审批</a></dd>
+            
+          </dl>
+        </li>
+
+        <li class="layui-nav-item"><a href="javascript:;">活动管理</a></li>
+        <li class="layui-nav-item"><a href="javascript:;">设置学分</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    <iframe src="account.html" frameborder="0" id="demoAdmin"  style="width: 100%;height: 100%;"></iframe>
+  </div>
+  
+  <div class="layui-footer" style="text-align: center;">
+    <!-- 底部固定区域 -->
+    甘肃社区教育网
+  </div>
+</div>
+<script type="text/javascript" src="../static/layui/layui.js" ></script>
+
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+</script>
+</body>
+</html>

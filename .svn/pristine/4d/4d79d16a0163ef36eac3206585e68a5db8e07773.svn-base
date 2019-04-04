@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>订单详情</title>
+		<link rel="stylesheet" href="../static/css/global.css" />
+		<link rel="stylesheet" href="../static/css/index.css" />
+		<link rel="stylesheet" href="../static/layui/css/layui.css" />
+	</head>
+	<body>
+		<p class="name">你好：<span>管理员</span></p>
+		<div class="goods">
+			<div class="herds">
+				<p class="p1">订单详情</p>
+				<p class="p2">返回</p>
+			</div>
+			<div class="goods_table">
+				<table  border="1" style="margin:  auto;width: 80%;height: 90%;">
+					<tr>
+					<td class="td" style="width: 120px;">兑换编码</td>
+					<td style="width: 560px;">12位</td>
+					<td class="td" style="width: 120px;">商品名称</td>
+					<td>巧克力</td>
+					</tr>
+					<tr>
+					<td class="td">购买时间</td>
+					<td>2019-10-9</td>
+					<td class="td">订单状态</td>
+					<td>发货</td>
+					</tr>
+					<tr>
+					<td class="td">购买件数</td>
+					<td>12</td>
+					<td class="td">所需积分</td>
+					<td>13877896654</td>
+					</tr>
+					<tr>
+					<td class="td">预留人名</td>
+					<td>老师</td>
+					<td class="td">预留电话</td>
+					<td>123454566</td>
+					</tr>
+					
+					<tr>
+					<td rowspan="2" class="td">商品简介</td>
+					<td rowspan="2">允许指定负长度值和百分比值。这会使元素降低而不是升高。在表单元格中，这个属性会设置单元</td>
+					<td rowspan="2" class="td">商品图片</td>
+					<td rowspan="2">
+						<img src="../static/img/index.jpg" style="width: 140px;height: 150px;"/>
+					</td>
+					</tr>
+				</table>
+			</div>
+			<p class="good_btn">完成</p>
+		</div>
+	</body>
+</html>

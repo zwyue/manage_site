@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>商品分类</title>
+		<link rel="stylesheet" href="../static/css/global.css" />
+		<link rel="stylesheet" href="../static/css/index.css" />
+		<link rel="stylesheet" href="../static/layui/css/layui.css" />
+	</head>
+	<body>
+		<p class="name">你好：<span>管理员</span></p>
+		<div class="goods_fen">
+			<div class="tan_tab" style="display: none;">
+				<p class="col"><i class="layui-icon layui-icon-close"></i> </p>
+				<p class="pw" style="background-color: #f3f6fb;">添加分类</p>
+				<div class="text">
+					<textarea style="height: 288px;width: 585px;border: none;"></textarea>
+				</div>
+				<p class="p2">添加</p>
+			</div>
+			<p class="p1">商品分类列表</p>
+			<div class="fen_one">
+				<div style="width: 760px;">
+					<ul>
+						<li class="li">
+							<i class="ok layui-icon layui-icon-ok" style="display: none;"></i>
+							<p>商品分类</p>
+							<i class="sc layui-icon layui-icon-delete" style="display: none;"></i>  
+						</li>
+						<li class="li">
+							<i class="ok layui-icon layui-icon-ok" style="display: none;"></i>
+							<p>商品分类</p>
+							<i class="sc layui-icon layui-icon-delete" style="display: none;"></i>  
+						</li>
+						<li class="li">
+							<i class="ok layui-icon layui-icon-ok" style="display: none;"></i>
+							<p>商品分类</p>
+							<i class="sc layui-icon layui-icon-delete" style="display: none;"></i>  
+						</li>
+						<li class="li">
+							<i class="ok layui-icon layui-icon-ok" style="display: none;"></i>
+							<p>商品分类</p>
+							<i class="sc layui-icon layui-icon-delete" style="display: none;"></i>  
+						</li>
+						<li class="li">
+							<i class="ok layui-icon layui-icon-ok" style="display: none;"></i>
+							<p>商品分类</p>
+							<i class="sc layui-icon layui-icon-delete" style="display: none;"></i>  
+						</li>
+						<li class="li">
+							<i class="ok layui-icon layui-icon-ok" style="display: none;"></i>
+							<p>商品分类</p>
+							<i class="sc layui-icon layui-icon-delete" style="display: none;"></i>  
+						</li>
+						<li class="li">
+							<i class="ok layui-icon layui-icon-ok" style="display: none;"></i>
+							<p>商品分类</p>
+							<i class="sc layui-icon layui-icon-delete" style="display: none;"></i>  
+						</li>
+						<li class="li">
+							<i class="ok layui-icon layui-icon-ok" style="display: none;"></i>
+							<p>商品分类</p>
+							<i class="sc layui-icon layui-icon-delete" style="display: none;"></i>  
+						</li>
+				
+					</ul>
+						<li><p class="add">+</p></li>
+				</div>
+				
+			</div>
+			<p class="p1" style="margin-top: 20px;">页面展示分类</p>
+			<div class="fen_one">
+				<div style="width: 760px;">
+					<ul>
+						<li>
+							<p>商品分类</p>
+							<i class="sc layui-icon layui-icon-delete" style="display: none;"></i>  
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../static/js/jquery-3.3.1.min.js" ></script>
+		<script>
+			$('.add').click(function(){
+				$('.tan_tab').css('display','')
+			})
+			
+			$('.col').click(function(){
+				$('.tan_tab').css('display','none')
+			})
+			
+			$('.goods_fen .fen_one li').mousemove(function(){
+				$(this).find('.ok').css('display','')
+				$(this).find('.sc').css('display','')
+			})
+
+			$('.goods_fen .fen_one li').mouseout(function(){
+				$(this).find('.ok').css('display','none')
+				$(this).find('.sc').css('display','none')
+			})
+
+		</script>
+	</body>
+</html>

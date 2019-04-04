@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" />
+</head>
+<body>
+<h1>用户注册</h1>
+<!--/form/sign-->
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户登录名</label>
+        <div class="layui-input-inline">
+            <input type="text" name="loginName" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="userSign">立即注册</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="../static/layui/layui.all.js" th:src="@{/layui/layui.all.js}"></script>
+<script>
+    //Demo
+    $(function () {
+        var form = layui.form;
+        //监听提交
+        form.on('submit(userSign)', function(data){
+            var commitData = {
+                loginName:data.field.loginName,
+                password:data.field.password
+            };
+            console.log(commitData);
+            $.ajax({
+                type: "POST",
+                url: "/form/sign",
+                data: JSON.stringify(commitData),
+                dataType:"json",
+                contentType: "application/json;charset=UTF-8",
+                success: function (data) {
+                    console.log(data);
+                    //视频发布失败
+                    if (data.code === 0) {
+                        layer.open({
+                            title: '用户注册失败!'
+                            , content: data.msg
+                        });
+                        return;
+                    }
+                    //视频发布成功
+                    if (data.code === 1) {
+                        layui.use('layer', function () {
+                            layer.msg('注册成功');
+                        });
+                        setTimeout(function jumpIndex() {
+                            window.location.href='/';
+                        }, 1000);
+                    }
+                    else {
+                        layui.use('layer', function () {
+                            layer.msg('用户注册失败');
+                        });
+                    }
+                },
+                error: function () {
+                    layer.msg("网络错误");
+                }
+
+            });
+            return false;
+        });
+    });
+
+</script>
+</body>
+</html>

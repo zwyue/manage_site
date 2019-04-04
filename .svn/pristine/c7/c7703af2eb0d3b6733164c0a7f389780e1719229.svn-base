@@ -1,0 +1,179 @@
+#####################时间：18/12/24 3:40 wanggang  修改tab_user字段即将tbl_user表中  is_volunteer 修改成 volunteer_state#####################
+ALTER TABLE `gansu`.`tbl_user`
+CHANGE COLUMN `is_volunteer` `volunteer_state` int(2) NULL DEFAULT 0 COMMENT '是否为志愿者（0：不是，1：是）' AFTER `city`;
+#####################时间：18/12/25 9:40 wanggang  创建活动表#####################
+CREATE TABLE `tbl_activity` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `activity_name` varchar(50) DEFAULT NULL COMMENT '活动名称',
+  `content_id` bigint(20) DEFAULT NULL COMMENT '活动内容Id（关联键）',
+  `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
+  `gmt_modified` datetime DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) DEFAULT '1' COMMENT '0:已删除，1:未删除',
+  `start_time` datetime DEFAULT NULL COMMENT '报名开始时间',
+  `end_time` datetime DEFAULT NULL COMMENT '报名截止时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='活动';
+
+#####################时间：18/12/25 9:40 wanggang  创建活动内容表#####################
+CREATE TABLE `tbl_activity_text` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `content_text` text COMMENT '活动详细内容',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='活动详细';
+
+#####################时间：18/12/25 9:40 wanggang  创建活动用户中间表#####################
+CREATE TABLE `tbl_activity_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `activity_id` bigint(20) DEFAULT NULL COMMENT '关联活动表id',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '关联用户表id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='活动和用户中间表';
+
+#####################时间 18/12/27 wanggang 添加用户活动中间表字段 #####################
+ALTER TABLE tbl_activity_user ADD activity_state int COMMENT '1:待审核, 2:审核通过 3.审核不通过';
+
+#tbl_activity_user 添加报名状态 1:待审核, 2:审核通过 3:审核不通过
+
+#修改 tbl_collection表status字段的备注信息
+ALTER TABLE `gansu`.`tbl_collection`
+MODIFY COLUMN `status` int(2) NULL DEFAULT NULL COMMENT '收藏状态 0 ：已取消，1：已收藏' AFTER `collection_time`;
+#添加 tbl_collection表is_delete字段的备注信息
+ALTER TABLE `gansu`.`tbl_collection`
+MODIFY COLUMN `is_deleted` int(2) NULL DEFAULT 1 COMMENT '0:已删除，1:未删除。' AFTER `gmt_modified`;
+
+###热门活动##
+-- ----------------------------
+-- Table structure for tbl_popular_activity
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_popular_activity`;
+CREATE TABLE `tbl_popular_activity`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '热门活动的主键',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
+  `url_cover` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '封面地址',
+  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '活动地址',
+  `undertake` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '承办方',
+  `counts` int(11) NULL DEFAULT 0 COMMENT '浏览量',
+  `content_id` int(11) NULL DEFAULT NULL COMMENT '热门活动内容id',
+  `creator_id` bigint(11) NULL DEFAULT NULL COMMENT '创建者',
+  `gmt_create` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `start_time` datetime(0) NOT NULL COMMENT '活动开始时间',
+  `end_time` datetime(0) NOT NULL COMMENT '活动结束时间',
+  `gmt_modified` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) NULL DEFAULT 1 COMMENT '0:已删除，1:未删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+####热门活动内容####
+DROP TABLE IF EXISTS `tbl_popularactivity_text`;
+CREATE TABLE `tbl_popularactivity_text`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '热门活动内容主键',
+  `content_text` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '热门活动内容',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+####投票问题####
+-- ----------------------------
+-- Table structure for tbl_vote
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_vote`;
+CREATE TABLE `tbl_vote`  (
+  `id` bigint(20) NOT NULL COMMENT '主键id',
+  `question` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '投票的问题（标题）',
+  `type` int(2) NULL DEFAULT NULL COMMENT '问题类型（0：纯文字，1：纯图片）',
+  `creator_id` bigint(20) NULL DEFAULT NULL COMMENT '创建者id',
+  `end_time` datetime(0) NULL DEFAULT NULL COMMENT '投票截止时间',
+  `course_id` bigint(20) NULL DEFAULT NULL COMMENT '投票所属课程id',
+  `is_end` int(255) NULL DEFAULT 1 COMMENT '投票是否已经结束 0已结束，1：未结束',
+  `gmt_create` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `gmt_modified` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) NULL DEFAULT 1 COMMENT '0:已删除，1:未删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_vote_user`(`creator_id`) USING BTREE,
+  INDEX `fk_vote_course`(`course_id`) USING BTREE,
+  CONSTRAINT `fk_vote_course` FOREIGN KEY (`course_id`) REFERENCES `tbl_course` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_vote_user` FOREIGN KEY (`creator_id`) REFERENCES `tbl_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+####投票选项###
+-- ----------------------------
+-- Table structure for tbl_voteoption
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_voteoption`;
+CREATE TABLE `tbl_voteoption`  (
+  `id` bigint(20) NOT NULL COMMENT '主键id',
+  `option` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '选项名称',
+  `content` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '选项内容',
+  `vote_id` bigint(20) NULL DEFAULT NULL COMMENT '选项所属投票问题id',
+  `answer_number` int(11) NULL DEFAULT NULL COMMENT '回答该选项的人数',
+  `gmt_create` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `gmt_modified` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) NULL DEFAULT 1 COMMENT '0:已删除，1:未删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_vote`(`vote_id`) USING BTREE,
+  CONSTRAINT `fk_vote` FOREIGN KEY (`vote_id`) REFERENCES `tbl_vote` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+##删除选项表字段 answer_number
+ALTER TABLE `gansu`.`tbl_voteoption`
+       DROP COLUMN `answer_number`;
+
+##删除教学资源表字段create_time
+ALTER TABLE `gansu`.`tbl_teachingresource`
+DROP COLUMN `create_time`;
+##修改教学资源表 添加默认值
+ALTER TABLE `gansu`.`tbl_teachingresource`
+MODIFY COLUMN `view_count` bigint(20) NULL DEFAULT 0 COMMENT '浏览量' AFTER `content`,
+MODIFY COLUMN `like_count` bigint(20) NULL DEFAULT 0 COMMENT '点赞量' AFTER `view_count`,
+MODIFY COLUMN `collection_count` bigint(20) NULL DEFAULT 0 COMMENT '收藏量' AFTER `like_count`;
+
+##添加notice表字段 is_course是否是课程公告  site_id 子站id
+ALTER TABLE `gansu`.`tbl_notice`
+ADD COLUMN `is_course` int(2) NULL COMMENT '0:是课程公告，1:通知公告' AFTER `is_deleted`;
+
+ALTER TABLE `gansu`.`tbl_notice`
+ADD COLUMN `site_id` bigint(20) NULL DEFAULT NULL COMMENT '所属子站id' AFTER `content_id`;
+
+##添加tbl_teachingresource表字段 is_recommend是否是设置推荐
+ALTER TABLE `gansu`.`tbl_teachingresource`
+ADD COLUMN `is_recommend` int(2) NULL COMMENT '0:不设置推荐，1:设置推荐' AFTER `is_deleted`;
+
+#####################时间 19/2/21 wanggang 修改积分记录表，将bigint类型 换为int类型 ################################
+ALTER TABLE `gansu`.`tbl_credit_record`
+MODIFY COLUMN `change_count` int(11) NULL DEFAULT NULL COMMENT '本次变化分值' AFTER `type`,
+MODIFY COLUMN `previous_credit` int(11) NULL DEFAULT NULL COMMENT '加分前总学分' AFTER `change_count`,
+MODIFY COLUMN `now_credit` int(11) NULL DEFAULT NULL COMMENT '加分后总学分' AFTER `previous_credit`;
+
+###热门活动表 ：添加子站id
+ALTER TABLE `gansu`.`tbl_popular_activity`
+ADD COLUMN `site_id` bigint(20) NULL COMMENT '子站id' AFTER `content_id`;
+
+#####################时间 19/2/21 wanggang user表 credit默认值修改为0 ################################
+ALTER TABLE `gansu`.`tbl_user`
+MODIFY COLUMN `credit` int(10) NULL DEFAULT 0 COMMENT '用户学分总分' AFTER `identification_no`;
+
+##添加 加分类型表
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- Table structure for tbl_bonus_type
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_bonus_type`;
+CREATE TABLE `tbl_bonus_type`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '加分类型表主键id',
+  `type_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型名',
+  `scores` bigint(20) NULL DEFAULT NULL COMMENT '加分值',
+  `gmt_create` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `gmt_modified` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `is_deleted` int(2) NULL DEFAULT 1 COMMENT '0:已删除，1:未删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+SET FOREIGN_KEY_CHECKS = 1;

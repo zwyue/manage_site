@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.PopularActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.PopularActivity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="content_id" property="contentId" jdbcType="INTEGER" />
+    <result column="url_cover" property="urlCover" jdbcType="VARCHAR" />
+    <result column="undertake" property="undertake" jdbcType="VARCHAR" />
+    <result column="counts" property="counts" jdbcType="INTEGER" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="site_id" property="siteId" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, title,address,url_cover,undertake,counts,content_id,creator_id,site_id, gmt_create, gmt_modified, is_deleted, start_time, end_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_popular_activity
+    where
+    id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!--查询所有热门活动信息:去除删除的-->
+  <select id="queryActivity" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tbl_popular_activity
+    where
+    is_deleted=1 and site_id=#{siteId,jdbcType=BIGINT}
+  </select>
+
+  <!--根据id查询热门活动信息-->
+  <select id="queryActivityById" resultType="com.zr.gansu.vo.PopularActivityVo">
+    select  db_a.id, db_a.title,db_a.address,db_a.url_cover urlCover,db_a.undertake,db_a.counts,db_a.content_id contentId,
+    db_a.creator_id creatorId,db_a.gmt_create gmtCreate,db_a.start_time startTime, db_a.end_time endTime,db_atext.content_text as contentText
+    from tbl_popular_activity db_a
+    left join tbl_popularactivity_text db_atext on db_a.content_id=db_atext.id
+    where
+    db_a.id=#{activityId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_popular_activity
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zr.gansu.domain.PopularActivity" >
+    insert into tbl_popular_activity (id,title,address,url_cover,counts,undertake,creator_id,site_id,gmt_create,start_time,end_time,
+      gmt_modified, is_deleted, content_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{urlCover,jdbcType=VARCHAR},#{counts,jdbcType=INTEGER},
+     #{undertake,jdbcType=VARCHAR},#{creatorId,jdbcType=BIGINT},#{siteId,jdbcType=BIGINT},#{gmtCreate,jdbcType=TIMESTAMP},
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+      #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER}, #{contentId,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zr.gansu.domain.PopularActivity" >
+    insert into tbl_popular_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="address !=null">
+        address,
+      </if>
+      <if test="urlCover !=null">
+        url_cover,
+      </if>
+      <if test="undertake !=null">
+        undertake,
+      </if>
+      <if test="counts !=null">
+        counts,
+      </if>
+      <if test="creatorId !=null">
+        creator_id,
+      </if>
+      <if test="siteId !=null">
+        site_id,
+      </if>
+      <if test="startTime !=null">
+        start_time,
+      </if>
+      <if test="endTime !=null">
+       end_time,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="contentId != null" >
+        content_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address !=null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="urlCover !=null">
+        #{urlCover,jdbcType=VARCHAR},
+      </if>
+      <if test="undertake !=null">
+        #{undertake,jdbcType=VARCHAR},
+      </if>
+      <if test="counts !=null">
+        #{counts,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId !=null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="siteId !=null">
+        #{siteId,jdbcType=BIGINT},
+      </if>
+      <if test="startTime !=null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime !=null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="contentId != null" >
+        #{contentId,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.PopularActivity" >
+    update
+    tbl_popular_activity
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address !=null">
+        address=#{address,jdbcType=VARCHAR},
+      </if>
+      <if test="urlCover !=null">
+       url_cover= #{urlCover,jdbcType=VARCHAR},
+      </if>
+      <if test="counts !=null">
+       counts= #{counts,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId !=null">
+       creator_id=#{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="siteId !=null">
+        site_id=#{siteId,jdbcType=BIGINT},
+      </if>
+      <if test="startTime !=null">
+       start_time= #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime !=null">
+       end_time=#{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="contentId != null" >
+        content_id = #{contentId,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

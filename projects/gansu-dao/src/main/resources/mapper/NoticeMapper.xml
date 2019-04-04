@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.Notice" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="lesson_id" property="lessonId" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="content_id" property="contentId" jdbcType="BIGINT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="is_course" property="isCourse" jdbcType="INTEGER" />
+    <result column="site_id" property="siteId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, creator_id, lesson_id, gmt_create, gmt_modified, content_id,site_id, is_deleted,is_course
+  </sql>
+  <!--查询所有的通知公告信息: 除去删除的-->
+  <select id="queryAllNotice" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_notice
+    where
+    is_deleted=1 and is_course=1 and site_id=#{siteId,jdbcType=BIGINT}
+  </select>
+  <select id="selectBycourseId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tbl_notice
+    where
+    lesson_id = #{lessonId,jdbcType=BIGINT} and is_deleted =1 and is_course = 0
+  </select>
+  <!--根据课程id查询公告信息-->
+  <select id="queryNoticeByCourse" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tbl_notice
+    where
+    lesson_id=#{courseId,jdbcType=BIGINT} and
+    is_deleted=1 and lesson_id is not NULL
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_notice
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!--根据公告id查看通知公告信息-->
+  <select id="queryNoticeById" resultType="com.zr.gansu.vo.NoticesVo">
+    select db_n.id, db_n.title, db_n.creator_id as creatorId,db_n.gmt_create as gmtCreate,db_ntext.content
+    from tbl_notice db_n
+    left join tbl_notice_text db_ntext on db_n.content_id=db_ntext.id
+    where db_n.id=#{noticeId,jdbcType=BIGINT} and db_n.is_course=1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_notice
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zr.gansu.domain.Notice" >
+    insert into tbl_notice (id, title, creator_id, 
+      lesson_id, gmt_create, gmt_modified, 
+      content_id,site_id,is_deleted,is_course)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{creatorId,jdbcType=BIGINT}, 
+      #{lessonId,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{contentId,jdbcType=BIGINT},#{siteId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER},#{isCourse,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true"  keyProperty="id" parameterType="com.zr.gansu.domain.Notice" >
+    insert into tbl_notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="lessonId != null" >
+        lesson_id,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="contentId != null" >
+      content_id,
+      </if>
+      <if test="siteId != null" >
+        site_id,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="isCourse != null" >
+        is_course
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="lessonId != null" >
+        #{lessonId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contentId != null" >
+        #{contentId,jdbcType=BIGINT},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="isCourse != null" >
+        #{isCourse,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.Notice" >
+    update tbl_notice
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="lessonId != null" >
+        lesson_id = #{lessonId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contentId != null" >
+        content_id = #{contentId,jdbcType=BIGINT},
+      </if>
+      <if test="siteId != null" >
+        site_id #{siteId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="isCourse != null" >
+        is_course = #{isCourse,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zr.gansu.domain.Notice" >
+    update tbl_notice
+    set title = #{title,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      lesson_id = #{lessonId,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      content_id = #{contentId,jdbcType=BIGINT},
+      site_id = #{siteId,jdbcType=BIGINT},
+      is_deleted = #{isDeleted,jdbcType=INTEGER},
+      is_course = #{isCourse,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.Goods" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="thumb" property="thumb" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="persistent_stock" property="persistentStock" jdbcType="INTEGER" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="exchange_start_time" property="exchangeStartTime" jdbcType="TIMESTAMP" />
+    <result column="exchange_end_time" property="exchangeEndTime" jdbcType="TIMESTAMP" />
+    <result column="catagory_id" property="catagoryId" jdbcType="BIGINT" />
+    <result column="view_count" property="viewCount" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zr.gansu.domain.Goods" extends="BaseResultMap" >
+    <result column="imgs" property="imgs" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, description, thumb, price, persistent_stock, stock, creator_id, exchange_start_time, 
+    exchange_end_time, catagory_id, view_count, gmt_create, gmt_modified, is_deleted
+  </sql>
+  <sql id="Blob_Column_List" >
+    imgs
+  </sql>
+
+  <!-- 查询商品List -->
+  <select id="queryGoodsList" resultMap="ResultMapWithBLOBs" parameterType="com.zr.gansu.domain.Goods" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_goods
+    <where>
+      is_deleted = 1
+    </where>
+  </select>
+
+
+  <!-- 查询该分类下，有没有被使用 -->
+  <select id="classificationUsing" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select count(0)
+    from tbl_goods
+    where catagory_id = #{catagoryId,jdbcType=BIGINT} and is_deleted = 1
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_goods
+    where id = #{id,jdbcType=BIGINT} for update
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zr.gansu.domain.Goods" >
+    insert into tbl_goods (id, name, description, 
+      thumb, price, persistent_stock, 
+      stock, creator_id, exchange_start_time, 
+      exchange_end_time, catagory_id, view_count, 
+      gmt_create, gmt_modified, is_deleted, 
+      imgs)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{thumb,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{persistentStock,jdbcType=INTEGER}, 
+      #{stock,jdbcType=INTEGER}, #{creatorId,jdbcType=BIGINT}, #{exchangeStartTime,jdbcType=TIMESTAMP}, 
+      #{exchangeEndTime,jdbcType=TIMESTAMP}, #{catagoryId,jdbcType=BIGINT}, #{viewCount,jdbcType=BIGINT}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER}, 
+      #{imgs,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zr.gansu.domain.Goods" >
+    insert into tbl_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="thumb != null" >
+        thumb,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="persistentStock != null" >
+        persistent_stock,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="exchangeStartTime != null" >
+        exchange_start_time,
+      </if>
+      <if test="exchangeEndTime != null" >
+        exchange_end_time,
+      </if>
+      <if test="catagoryId != null" >
+        catagory_id,
+      </if>
+      <if test="viewCount != null" >
+        view_count,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="imgs != null" >
+        imgs,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb != null" >
+        #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="persistentStock != null" >
+        #{persistentStock,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="exchangeStartTime != null" >
+        #{exchangeStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exchangeEndTime != null" >
+        #{exchangeEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="catagoryId != null" >
+        #{catagoryId,jdbcType=BIGINT},
+      </if>
+      <if test="viewCount != null" >
+        #{viewCount,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="imgs != null" >
+        #{imgs,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.Goods" >
+    update tbl_goods
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb != null" >
+        thumb = #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="persistentStock != null" >
+        persistent_stock = #{persistentStock,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="exchangeStartTime != null" >
+        exchange_start_time = #{exchangeStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exchangeEndTime != null" >
+        exchange_end_time = #{exchangeEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="catagoryId != null" >
+        catagory_id = #{catagoryId,jdbcType=BIGINT},
+      </if>
+      <if test="viewCount != null" >
+        view_count = #{viewCount,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="imgs != null" >
+        imgs = #{imgs,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zr.gansu.domain.Goods" >
+    update tbl_goods
+    set name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      thumb = #{thumb,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      persistent_stock = #{persistentStock,jdbcType=INTEGER},
+      stock = #{stock,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      exchange_start_time = #{exchangeStartTime,jdbcType=TIMESTAMP},
+      exchange_end_time = #{exchangeEndTime,jdbcType=TIMESTAMP},
+      catagory_id = #{catagoryId,jdbcType=BIGINT},
+      view_count = #{viewCount,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=INTEGER},
+      imgs = #{imgs,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zr.gansu.domain.Goods" >
+    update tbl_goods
+    set name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      thumb = #{thumb,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      persistent_stock = #{persistentStock,jdbcType=INTEGER},
+      stock = #{stock,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      exchange_start_time = #{exchangeStartTime,jdbcType=TIMESTAMP},
+      exchange_end_time = #{exchangeEndTime,jdbcType=TIMESTAMP},
+      catagory_id = #{catagoryId,jdbcType=BIGINT},
+      view_count = #{viewCount,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

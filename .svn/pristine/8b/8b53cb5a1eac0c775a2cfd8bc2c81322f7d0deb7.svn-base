@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>视频资源列表</title>
+		<link rel="stylesheet" href="../static/css/global.css" />
+		<link rel="stylesheet" href="../static/css/index.css" />
+		<link rel="stylesheet" href="../static/layui/css/layui.css" />
+	</head>
+	<style>
+		.span1{
+			width: 80px;
+		    height: 25px;
+		    display: inline-block;
+		    line-height: 25px;
+		    border-radius: 15px;
+		    background-color: #1E9FFF;
+		    color: white;
+		}
+		.span2{
+		    width: 60px;
+		    height: 25px;
+		    line-height: 25px;
+		    border-radius: 13px;
+		    border: 1px solid;
+		    display: inline-block;	
+		}
+		
+		.span3{
+		    width: 60px;
+		    height: 25px;
+		    line-height: 25px;
+		    border-radius: 13px;
+		    border: 1px solid;
+		    display: inline-block;	
+		}
+		
+		.look_dome{
+			position: absolute;
+			width: 100%;
+			height: 50px;
+			}
+		.look_work{
+			width: 100%;
+			height: 0px;
+			background-color: #fbfbfb;
+			display: flex;
+			justify-content: space-around;
+		}
+		
+		.look_work .photo{
+			width: 250px;
+			height: 0px;
+			background: url(../static/img/index.jpg);
+			background-size: 100% 100%;
+			margin-top: 20px;
+			border-radius: 10px;
+			position: relative;
+		}
+		.look_work .photo .col{
+			text-align: center;
+		    width: 25px;
+		    height: 25px;
+		    border: 1px solid #c3c3c3;
+		    position: absolute;
+		    border-radius: 16px;
+		    line-height: 25px;
+		    color: white;
+		    background-color: #eee;
+		    top: -20px;
+		    right: -20px;
+			display: none;
+		}
+		
+		
+		
+		.look_tan{
+			width: 100%;
+			height: 50px;
+			background: url(../static/img/xia.png);
+			background-size: 100% 100%;
+			
+			
+		}
+	</style>
+	<body>
+		<p class="name">你好：<span>管理员</span></p>
+		<div class="activ_look">
+			<div class="look_one" style="position: relative;">
+				
+				<div class="look_dome">
+					<div class="look_work">
+						<div class="photo">
+							<p class="col"><i class="layui-icon layui-icon-close"></i></p>
+						
+						</div>
+						<div class="photo">
+							<p class="col"><i class="layui-icon layui-icon-close"></i></p>
+						</div>
+						<div class="photo">
+							<p class="col"><i class="layui-icon layui-icon-close"></i></p>
+						</div>
+						<div class="photo">
+							<p class="col"><i class="layui-icon layui-icon-close"></i></p>
+						</div>
+						
+					</div>
+					<div class="look_tan"></div>
+				</div>
+				<div class="div1" style="width: 30%;">
+				 	资源标题：<input type="text" style="height: 25px;"/>
+				 </div>
+				 <div class="div1" style="width: 30%;">
+				 	所属子站：<select>
+				 		<option>兰州</option>
+				 		<option></option>
+				 		<option></option>
+				 	</select>
+				 </div>
+				 <p class="p1">查询</p>
+			</div>
+			<div class="look_two">
+				<div class="account_table">
+					<div class="table_herd">
+						<p class="p1">视频资源列表</p>
+						<p class="xinz">新增</p>
+					</div>
+					<div class="table">
+						<table>
+							<tr>
+								<th>序号</th>
+								<th>标题</th>
+								<th>发布时间</th>
+								<th>所属子站</th>
+								<th style="width: 30%;">操作</th>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td>
+									<span class="span1">首页展示</span>
+									<span class="span2">编辑</span>
+									<span class="span3">删除</span>
+								</td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td>
+									<span class="span1">首页展示</span>
+									<span class="span2">编辑</span>
+									<span class="span3">删除</span>
+								</td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td>
+									<span class="span1">首页展示</span>
+									<span class="span2">编辑</span>
+									<span class="span3">删除</span>
+								</td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td>
+									<span class="span1">首页展示</span>
+									<span class="span2">编辑</span>
+									<span class="span3">删除</span>
+								</td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td>
+									<span class="span1">首页展示</span>
+									<span class="span2">编辑</span>
+									<span class="span3">删除</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="demo2" style="text-align: center;margin-top: 20px;"></div>
+ 				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../static/js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="../static/layui/layui.js" ></script>
+		<script>
+			layui.use('laypage', function(){
+			  var laypage = layui.laypage;
+			  
+			 laypage.render({
+			    elem: 'demo2'
+			    ,count: 100
+			    ,theme: '#1E9FFF'
+			  });
+			});
+			
+			
+	
+		</script>
+		<script>
+			$('.look_tan').click(function(){
+					if($('.look_work').css('height')=='0px'){
+						$('.look_work').animate({height: '220px'}, 100)
+						$('.look_work .photo').animate({height: '190px'}, 100)
+						$(".look_tan").css("background-image","url(../static/img/shang.png)");
+						
+					}else{
+						$('.look_work').animate({height: '0'}, 100)
+						$('.look_work .photo').animate({height: '0'}, 100)
+						$(".look_tan").css("background-image","url(../static/img/xia.png)");
+					}
+					
+						
+			})
+			
+			
+		
+			
+			
+			
+			$('.look_work .photo').mouseover(function(){
+				
+				$(this).find('.col').css('display','block')
+			})
+			
+			$('.look_work .photo').mouseout(function(){
+				$(this).find('.col').css('display','none')
+			})
+			
+		</script>
+	</body>
+</html>

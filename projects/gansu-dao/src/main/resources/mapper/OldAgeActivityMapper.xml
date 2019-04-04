@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.OldAgeActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.OldAgeActivity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="content_id" property="contentId" jdbcType="INTEGER" />
+    <result column="cover_url" property="coverUrl" jdbcType="VARCHAR" />
+    <result column="organizer" property="organizer" jdbcType="VARCHAR" />
+    <result column="view_count" property="viewCount" jdbcType="INTEGER" />
+    <result column="total_people" property="totalPeople" jdbcType="INTEGER" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, title,address,cover_url,organizer,view_count,content_id,creator_id,
+    gmt_create, gmt_modified, is_deleted, start_time, end_time,total_people,type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_old_age_activity
+    where
+    id = #{id,jdbcType=BIGINT} and is_deleted = 1
+  </select>
+  <select id="findAllByType" parameterType="integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_old_age_activity
+    where
+    is_deleted = 1 and type = #{type,jdbcType=INTEGER}
+  </select>
+  <select id="findByTypeWithJoin" resultMap="BaseResultMap">
+    select
+    toaa.id, title,address,cover_url,organizer,view_count,content_id,creator_id,
+    gmt_create, gmt_modified, is_deleted, start_time, end_time,total_people,type
+    from tbl_old_age_activity toaa
+    left join tbl_old_age_activity_user toaau on toaa.id = toaau.activity_id and toaau.user_id = #{userId,jdbcType=BIGINT}
+    where
+    is_deleted = 1 and type = #{type,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_old_age_activity
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.zr.gansu.domain.OldAgeActivity" >
+    insert into tbl_old_age_activity
+     (id,title,address,cover_url,view_count,organizer,creator_id,gmt_create,start_time,end_time,
+      gmt_modified, is_deleted, content_id,total_people,type
+      )
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
+      #{coverUrl,jdbcType=VARCHAR},#{viewCount,jdbcType=INTEGER},#{organizer,jdbcType=VARCHAR},
+      #{creatorId,jdbcType=BIGINT},#{gmtCreate,jdbcType=TIMESTAMP},#{startTime,jdbcType=TIMESTAMP},
+      #{endTime,jdbcType=TIMESTAMP},#{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER},
+      #{contentId,jdbcType=BIGINT},#{totalPeople,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.zr.gansu.domain.OldAgeActivity" >
+    insert into tbl_old_age_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="address !=null">
+        address,
+      </if>
+      <if test="coverUrl !=null">
+        cover_url,
+      </if>
+      <if test="organizer !=null">
+        organizer,
+      </if>
+      <if test="viewCount !=null">
+        view_count,
+      </if>
+      <if test="creatorId !=null">
+        creator_id,
+      </if>
+      <if test="startTime !=null">
+        start_time,
+      </if>
+      <if test="endTime !=null">
+       end_time,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="contentId != null" >
+        content_id,
+      </if>
+      <if test="totalPeople != null" >
+        total_people,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address !=null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="coverUrl !=null">
+        #{coverUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="organizer !=null">
+        #{organizer,jdbcType=VARCHAR},
+      </if>
+      <if test="viewCount !=null">
+        #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId !=null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="startTime !=null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime !=null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="contentId != null" >
+        #{contentId,jdbcType=BIGINT},
+      </if>
+      <if test="totalPeople != null" >
+        #{totalPeople,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.OldAgeActivity" >
+    update
+    tbl_old_age_activity
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="coverUrl != null">
+       cover_url = #{coverUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="viewCount != null">
+       view_count = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+       creator_id=#{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="startTime != null">
+       start_time= #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime !=null">
+       end_time=#{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="contentId != null" >
+        content_id = #{contentId,jdbcType=BIGINT},
+      </if>
+      <if test="totalPeople != null" >
+        total_people = #{totalPeople,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

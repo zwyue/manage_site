@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>新闻详情</title>
+	</head>
+		<link rel="stylesheet" href="../../static/css/global.css" th:href="@{/css/global.css}"/>
+		<link rel="stylesheet" href="../../static/css/index.css" th:href="@{/css/index.css}"/>
+		<link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}"/>
+	<body>
+		<div class="herd detai">
+			
+		
+			<div class="herd_dao">
+				<div class="herd_one">
+					<img src="../../static/img/LOGO1.png" th:src="@{/img/LOGO1.png}" style="width: 70%;" />
+				</div>
+				<div class="herd_two">
+					<ul>
+						<li><p class="min">首页</p></li>
+						<li><p class="max">社区教育</p></li>
+						<li><p class="max">在线课程</p></li>
+						<li><p class="max">教育直播</p></li>
+						<li><p class="max">学分商城</p></li>
+						<li><p class="max">我的</p></li>
+					</ul>
+				</div>
+				<div class="herd_three">
+					<ul>
+						
+						<li style="width: 19%;"><i class="layui-icon layui-icon-notice"></i></li>
+						<li style="margin-top: 33px;width: 25%;"><p><i class="layui-icon layui-icon-vercode"></i>登录</p></li>
+						<li style="margin-top: 33px;width: 25%;"><p><i class="layui-icon layui-icon-user"></i>注册</p></li>
+					
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="details">
+			<p class="p1">教学资源</p>
+			<div class="dao">
+				<span>首页</span>><span>教学资源</span>><span>详情</span>
+			</div>
+			<div class="details_or">
+				<div class="details_book">
+					<div class="details_name">
+						<p>《插花》教学设计</p>
+					</div>
+				   	<div class="details_zuoze">
+				   		<p>作者：<span>小道士</span></p>
+				   		<p>发布时间：<span>2019/1/05</span></p>
+				   		<p>浏览 次数：<span>2304</span></p>
+				   	</div>
+				</div>
+				<div class="book_text">
+					<p class="text1">
+						微动画讲述3个小故事，动画片里的内容均来自现实，动画片里的内容均来自现实，动画片里的内容均来自现实，动画片里的内容均来自现实，动画片里的内容均来自现实，治理环境污染、加大交通扶贫力度、推进恶性肿瘤靶向药纳入医保，这些都是人大代表在全国两会上提出的真实建议案例，并得到有关部门采纳，给群众带来了实惠
+					</p>
+					<div class="img"></div>
+					<p class="text2">
+						微动画讲述3个小故事，动画片里的内容均来自现实，治理环境污染、加大交通扶贫力度动画片里的内容均来自现实，动画片里的内容均来自现实，动画片里的内容均来自现实，、推进恶性肿瘤靶向药纳入医保，这些都是人大代表在全国两会上提出的真实建议案例，并得到有关部门采纳，给群众带来了实惠
+					</p>
+					<div class="img"></div>
+					<p class="text3">
+						微动画讲述3个小故事，动画片里的内容均来自现实，治理环境污染、加大交通扶贫力度、推进恶性肿瘤靶向药纳入医保，动画片里的内容均来自现实，动画片里的内容均来自现实，动画片里的内容均来自现实，这些都是人大代表在全国两会上提出的真实建议案例，并得到有关部门采纳，给群众带来了实惠
+					</p>
+				</div>
+				
+			</div>
+			<p style="border: 2px solid #55aae6;"></p>
+			<div style="display: flex;justify-content: space-around;margin: 40px 0;">
+				<a>上一篇：<span>动画片里的内容均来自现实</span></a>
+				<a>下一篇:<span>动画片里的内容均来自现实</span></a>
+			</div>
+		</div>
+		<div class="bottum">
+			<img src="../../static/img/logo.png" th:src="@{/img/logo.png}" />
+			<div class="bottum_bl">
+				<div class="logo">
+					<img src="" />
+					<p>甘肃社区教育网</p>
+				</div>
+				<div class="new">
+					<ul>
+						<li style="font-weight: 600;font-size: 17px;">关于我们</li>
+						<li>官网简介</li>
+						<li>产品中心</li>
+						<li>服务中心</li>
+					</ul>				
+				</div>
+				<div class="who">
+					<ul>
+						<li style="font-weight: 600;font-size: 17px;">联系我们</li>
+						<li>联系电话：18133533421</li>
+						<li>网站地址：www.gansustudy.com</li>
+						<li>公司网址：291254322@company.com</li>
+						<li>公司地址：甘肃省兰州市</li>
+					</ul>
+				</div>
+				<div class="web">
+					<img src=""/>
+					<p>官方微博</p>
+				</div>
+				<div class="web">
+					<img src=""/>
+					<p>官方微博</p>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js" th:src="@{js/jquery-3.3.1.min.js}"></script>
+	<script type="text/javascript" src="../../static/js/index.js" th:src="@{/js/index.js}" ></script>
+</html>

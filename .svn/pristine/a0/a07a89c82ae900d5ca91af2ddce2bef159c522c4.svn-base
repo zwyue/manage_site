@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>账户管理</title>
+		<link rel="stylesheet" href="../static/css/global.css" />
+		<link rel="stylesheet" href="../static/css/index.css" />
+		<link rel="stylesheet" href="../static/layui/css/layui.css" />
+	</head>
+	<body>
+		<p class="name">你好：<span>管理员</span></p>
+		<div class="account">
+			 
+			 <div class="account_user">
+					<div class="layui-form-item">
+						<label class="layui-form-label">账号昵称</label>
+						<div class="layui-input-block">
+							<input type="text" placeholder="请输入账号昵称" class="layui-input">
+						</div>
+					</div>
+
+					<div class="layui-form-item" style="margin-right: 30%;">
+						<label class="layui-form-label">权限级别</label>
+						<div class="layui-input-block" style="line-height: 36px;">
+							<select class="sele">
+								<option value="0">总站（一级管理员）</option>
+								<option value="1">总站（二级管理员）</option>
+							</select>
+						</div>
+					</div>
+					<p class="fan">查询</p>
+			</div>
+			
+			<div class="account_table">
+				<div class="table_herd">
+					<p class="p1">新闻资讯列表</p>
+					<p class="p2">新增</p>
+				</div>
+				<div class="table">
+					<table>
+						<tr>
+							<th>序号</th>
+							<th>昵称</th>
+							<th>联系号码</th>
+							<th>权限级别</th>
+							<th>操作</th>
+						</tr>
+						<tr class="rig">
+							<td>1</td>
+							<td>今日资讯</td>
+							<td>13676865642</td>
+							<td>兰州（二级权限）</td>
+							<td>
+								<i class="layui-icon layui-icon-edit" style="color: #0095ff;"></i> 
+								<i class="layui-icon layui-icon-delete"></i>
+							</td>
+						</tr>
+						<tr class="rig">
+							<td>1</td>
+							<td>今日资讯</td>
+							<td>13676865642</td>
+							<td>兰州（二级权限）</td>
+							<td>
+								<i class="layui-icon layui-icon-edit" style="color: #0095ff;"></i> 
+								<i class="layui-icon layui-icon-delete" ></i>
+							</td>
+						</tr>
+						<tr class="rig">
+							<td>1</td>
+							<td>今日资讯</td>
+							<td>13676865642</td>
+							<td>兰州（二级权限）</td>
+							<td>
+								<i class="layui-icon layui-icon-edit" style="color: #0095ff;"></i> 
+								<i class="layui-icon layui-icon-delete"></i>
+							</td>
+						</tr>
+						<tr class="rig">
+							<td>1</td>
+							<td>今日资讯</td>
+							<td>13676865642</td>
+							<td>兰州（二级权限）</td>
+							<td>
+								<i class="layui-icon layui-icon-edit" style="color: #0095ff;"></i> 
+								<i class="layui-icon layui-icon-delete"></i>
+							</td>
+						</tr>
+						<tr class="rig">
+							<td>1</td>
+							<td>今日资讯</td>
+							<td>13676865642</td>
+							<td>兰州（二级权限）</td>
+							<td>
+								<i class="layui-icon layui-icon-edit" style="color: #0095ff;"></i> 
+								<i class="layui-icon layui-icon-delete"></i>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+				<div id="demo2" style="text-align: center;margin-top: 20px;"></div>
+ 	
+			</div>
+		</div>
+		
+		<script src="../static/js/jquery-3.3.1.min.js"></script>
+		<script src="../static/layui/layui.js"></script>
+		<script>
+			layui.use('laypage', function(){
+			  var laypage = layui.laypage;
+			  
+			 laypage.render({
+			    elem: 'demo2'
+			    ,count: 100
+			    ,theme: '#1E9FFF'
+			  });
+			});
+			
+			
+		
+		</script>
+	</body>
+</html>

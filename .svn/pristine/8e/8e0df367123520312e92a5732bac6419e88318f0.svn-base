@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.OldAgeActivityUserMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.OldAgeActivityUser" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="activity_id" property="activityId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="check_in" property="checkIn" jdbcType="INTEGER" />
+    <result column="sign_off" property="signOff" jdbcType="INTEGER" />
+    <result column="check_in_time" property="checkInTime" jdbcType="TIMESTAMP" />
+    <result column="sign_off_time" property="signOffTime" jdbcType="TIMESTAMP" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, activity_id, user_id, check_in, sign_off, check_in_time, sign_off_time
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_old_age_activity_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByUserIdAndActivityId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_old_age_activity_user
+    where user_id = #{userId,jdbcType=BIGINT} and activity_id = #{activityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_old_age_activity_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zr.gansu.domain.OldAgeActivityUser" >
+    insert into tbl_old_age_activity_user (id, activity_id, user_id, check_in, sign_off,
+                check_in_time, sign_off_time)
+    values (#{id,jdbcType=BIGINT}, #{activityId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}
+    , #{checkIn,jdbcType=INTEGER}, #{signOff,jdbcType=INTEGER}, #{checkInTime,jdbcType=TIMESTAMP}
+    , #{signOffTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zr.gansu.domain.OldAgeActivityUser" >
+    insert into tbl_old_age_activity_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="checkIn != null" >
+        check_in,
+      </if>
+      <if test="signOff != null" >
+        sign_off,
+      </if>
+      <if test="checkInTime != null" >
+        check_in_time,
+      </if>
+      <if test="signOffTime != null" >
+        sign_off_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="checkIn != null" >
+        #{checkIn,jdbcType=INTEGER},
+      </if>
+      <if test="signOff != null" >
+        #{signOff,jdbcType=INTEGER},
+      </if>
+      <if test="checkInTime != null" >
+        #{checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signOffTime != null" >
+        #{signOffTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.OldAgeActivityUser" >
+    update tbl_old_age_activity_user
+    <set >
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="checkIn != null" >
+        check_in = #{checkIn,jdbcType=INTEGER},
+      </if>
+      <if test="signOff != null" >
+        sign_off = #{signOff,jdbcType=INTEGER},
+      </if>
+      <if test="checkInTime != null" >
+        check_in_time = #{checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signOffTime != null" >
+        sign_off_time = #{signOffTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

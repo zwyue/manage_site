@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.TeachingResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.TeachingResource" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="BIGINT" />
+    <result column="view_count" property="viewCount" jdbcType="BIGINT" />
+    <result column="like_count" property="likeCount" jdbcType="BIGINT" />
+    <result column="collection_count" property="collectionCount" jdbcType="BIGINT" />
+    <result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="is_recommend" property="isRecommend" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, description, type, content, view_count, like_count, collection_count, 
+    thumbnail, creator,  gmt_create, gmt_modified, is_deleted,is_recommend
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_teachingresource
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!--查询全部资源，不包括删除的-->
+  <select id="queryResource" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_teachingresource
+    where is_deleted=1
+  </select>
+  <!--分资源类型查询， 不包括删除的-->
+  <select id="queryResourceByType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_teachingresource
+    where is_deleted=1 and `type`=#{type,jdbcType=VARCHAR}
+  </select>
+
+  <!--查询4个推荐的资源内容-->
+  <select id="recommendTeachingResource" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_teachingresource db_t
+    where db_t.is_deleted=1 and db_t.is_recommend=1
+    <if test="type != null">
+      and db_t.type=#{type,jdbcType=VARCHAR}
+    </if>
+    ORDER BY gmt_create desc  LIMIT 4
+  </select>
+  <!--根据id 查询资源内容信息: 不包扣删除的-->
+  <select id="queryResourceInfoById" parameterType="long" resultType="com.zr.gansu.vo.TeachingResourceInfoVo">
+    select
+    db1.id, db1.title, db1.description, db1.type,db1.view_count as viewCount, db1.like_count as likeCount,
+    db1.collection_count as collectionCount, db1.thumbnail, db1.creator, db1.gmt_create as gmtCreate, db1.gmt_modified as gmtModified,
+    db2.content
+    from tbl_teachingresource db1
+    left join tbl_teachingresource_text db2  on db1.content=db2.id
+    where  db1.id=#{id,jdbcType=BIGINT} and db1.is_deleted=1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_teachingresource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zr.gansu.domain.TeachingResource" >
+    insert into tbl_teachingresource (id, title, description, 
+      type, content, view_count, 
+      like_count, collection_count, thumbnail, 
+      creator, gmt_create,
+      gmt_modified, is_deleted,is_recommend)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{content,jdbcType=BIGINT}, #{viewCount,jdbcType=BIGINT}, 
+      #{likeCount,jdbcType=BIGINT}, #{collectionCount,jdbcType=BIGINT}, #{thumbnail,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+      #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER},#{isRecommend,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zr.gansu.domain.TeachingResource" >
+    insert into tbl_teachingresource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="viewCount != null" >
+        view_count,
+      </if>
+      <if test="likeCount != null" >
+        like_count,
+      </if>
+      <if test="collectionCount != null" >
+        collection_count,
+      </if>
+      <if test="thumbnail != null" >
+        thumbnail,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="isRecommend != null" >
+        is_recommend
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=BIGINT},
+      </if>
+      <if test="viewCount != null" >
+        #{viewCount,jdbcType=BIGINT},
+      </if>
+      <if test="likeCount != null" >
+        #{likeCount,jdbcType=BIGINT},
+      </if>
+      <if test="collectionCount != null" >
+        #{collectionCount,jdbcType=BIGINT},
+      </if>
+      <if test="thumbnail != null" >
+        #{thumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="isRecommend != null" >
+        #{isRecommend,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.TeachingResource" >
+    update tbl_teachingresource
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=BIGINT},
+      </if>
+      <if test="viewCount != null" >
+        view_count = #{viewCount,jdbcType=BIGINT},
+      </if>
+      <if test="likeCount != null" >
+        like_count = #{likeCount,jdbcType=BIGINT},
+      </if>
+      <if test="collectionCount != null" >
+        collection_count = #{collectionCount,jdbcType=BIGINT},
+      </if>
+      <if test="thumbnail != null" >
+        thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="isRecommend != null" >
+        is_recommend = #{isRecommend,jdbcType=INTEGER}
+      </if>
+
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zr.gansu.domain.TeachingResource" >
+    update tbl_teachingresource
+    set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      content = #{content,jdbcType=BIGINT},
+      view_count = #{viewCount,jdbcType=BIGINT},
+      like_count = #{likeCount,jdbcType=BIGINT},
+      collection_count = #{collectionCount,jdbcType=BIGINT},
+      thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=INTEGER},
+      is_recommend = #{is_Recommend,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

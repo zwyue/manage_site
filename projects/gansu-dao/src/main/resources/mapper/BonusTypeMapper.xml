@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.BonusTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.BonusType" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="scores" property="scores" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type_name, scores,gmt_create,gmt_modified,is_deleted
+  </sql>
+
+  <!--查询所有信息-->
+  <select id="queryBonusType" resultType="com.zr.gansu.vo.BonusTypeVo">
+    select id,type_name typeName,scores,gmt_create gmtCreate
+    from tbl_bonus_type
+    where is_deleted=1
+  </select>
+  <!--根据类型名查询该类型是否存在-->
+  <select id="queryBonusTypeByName" parameterType="string" resultType="integer">
+    select  count(0) from tbl_bonus_type
+    where type_name=#{typeName,jdbcType=VARCHAR} and is_deleted=1
+  </select>
+
+  <select id="selectBonusType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tbl_bonus_type
+    where type_name=#{typeName,jdbcType=VARCHAR} and is_deleted=1
+  </select>
+  <select id="queryBonusTypeById" parameterType="long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tbl_bonus_type
+    where  id = #{id,jdbcType=BIGINT} and is_deleted=1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_bonus_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zr.gansu.domain.BonusType" >
+    insert into tbl_bonus_type (id, type_name,scores gmt_create,
+      gmt_modified, is_deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{typeName,jdbcType=VARCHAR},#{scores,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP},
+      #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zr.gansu.domain.Activity" >
+    insert into tbl_bonus_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="typeName != null" >
+        type_name,
+      </if>
+      <if test="scores != null" >
+        scores,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="scores != null" >
+        #{scores,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.Activity" >
+    update tbl_bonus_type
+    <set >
+      <if test="typeName != null" >
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="scores != null" >
+        scores = #{scores,jdbcType=BIGINT},
+      </if>
+
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新闻资讯</title>
+    <link rel="stylesheet" href="../../static/css/global.css" th:href="@{/css/global.css}"/>
+    <link rel="stylesheet" href="../../static/css/index.css" th:href="@{/css/index.css}"/>
+    <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}"/>
+</head>
+
+<body>
+<div class="herd">
+    <div class="layui-form-item" style="position: absolute;top: 45%;left: 34%; width: 540px;">
+
+        <div class="layui-input-block">
+            <div class="cour_bo">
+                <p class="cour_p">新闻资讯</p>
+            </div>
+            <i class="layui-icon layui-icon-search"
+               style="color: white;font-size: 40px;position: absolute;right: 10px; z-index: 1000;height: 60px;line-height: 60px;"></i>
+            <input type="text" placeholder="请输入新闻" class="layui-input"
+                   style="color: white;height: 60px;border-top-right-radius: 30px;border-bottom-right-radius: 30px;background-color: #0000007a;">
+        </div>
+    </div>
+    <div class="herd_dao">
+        <div class="herd_one">
+            <img src="../../static/img/LOGO1.png" th:src="@{/img/LOGO1.png}" style="width: 70%;"/>
+        </div>
+        <div class="herd_two">
+            <ul>
+                <li><p class="min">首页</p></li>
+                <li><p class="max">社区教育</p></li>
+                <li><p class="max">在线课程</p></li>
+                <li><p class="max">教育直播</p></li>
+                <li><p class="max">学分商城</p></li>
+                <li><p class="min" style="margin-left: 30px;">我的</p></li>
+            </ul>
+        </div>
+        <div class="herd_three">
+            <ul>
+
+                <li style="width: 19%;"><i class="layui-icon layui-icon-notice"></i></li>
+
+                <li class="dom">
+                    <div class="user">
+                        <div class="user_bo" style="display: none;">
+                            <ul>
+                                <li><p class="p1">注销</p></li>
+                                <li><p class="p1">个人中心</p></li>
+                            </ul>
+                        </div>
+                        <img src="../../static/img/logo.png" th:src="@{/img/logo.png}"/>
+                        &nbsp;<span>陌上花开</span><span style="margin-left: 5px;"><i class="layui-icon layui-icon-down"
+                                                                                  style="font-size: 10px;"></i></span>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="news">
+    <div class="newinfor">
+        <div class="news_text">
+            <p class="te1 ap" style="margin-top: 60px;">新闻资讯</p>
+            <p class="te2" style="margin: 60px 20px 0 20px">通知公告</p>
+            <p class="te3" style="margin-top: 60px;">艺术展示</p>
+        </div>
+        <div class="show" style="background-color: #f3f7fa;">
+            <div class="news_book box1 ">
+                <div class="news_book_min">
+                    <div class="book_min_one">
+                        <p class="p1">要闻</p>
+                        <p style="text-align: center;margin-top: 50px;font-size: 25px;">Jin</p>
+                    </div>
+
+                    <div class="book_min_two">
+                        <ul>
+                            <li style="color: #03A9F4;font-size: 18px;">习近平：历史研究是社会科学基础</li>
+                            <li class="li2"><p>2019</p>
+                                <p class="p2">新闻中心</p></li>
+                            <li class="li3"><p></p></li>
+                            <li style="margin-top: 10px;height: 140px;width: 310px;">习近平：历史研究是社会科学基础习近平：：历史研究是社会科学基础
+                            </li>
+                            <li style="font-size: 10px;text-align: right;">浏览次数：<span>1222</span>次</li>
+                        </ul>
+                    </div>
+
+
+                    <div class="book_min_three">
+                        <img src="../../static/img/logo.png" th:src="@{/img/logo.png}"/>
+                    </div>
+
+                </div>
+                <div class="news_book_min">
+                    <div class="book_min_one">
+                        <p class="p1">要闻</p>
+                        <p style="text-align: center;margin-top: 50px;font-size: 25px;">Jin</p>
+                    </div>
+
+                    <div class="book_min_two">
+                        <ul>
+                            <li style="color: #03A9F4;font-size: 18px;">习近平：历史研究是社会科学基础</li>
+                            <li class="li2"><p>2019</p>
+                                <p class="p2">新闻中心</p></li>
+                            <li class="li3"><p></p></li>
+                            <li style="margin-top: 10px;height: 140px;width: 310px;">习近平：历史研究是社会科学基础习近平：：历史研究是社会科学基础
+                            </li>
+                            <li style="font-size: 10px;text-align: right;">浏览次数：<span>1222</span>次</li>
+                        </ul>
+                    </div>
+
+
+                    <div class="book_min_three">
+                        <img src="../../static/img/logo.png" th:src="@{/img/logo.png}"/>
+                    </div>
+
+                </div>
+                <div class="news_book_min">
+                    <div class="book_min_one">
+                        <p class="p1">要闻</p>
+                        <p style="text-align: center;margin-top: 50px;font-size: 25px;">Jin</p>
+                    </div>
+
+                    <div class="book_min_two">
+                        <ul>
+                            <li style="color: #03A9F4;font-size: 18px;">习近平：历史研究是社会科学基础</li>
+                            <li class="li2"><p>2019</p>
+                                <p class="p2">新闻中心</p></li>
+                            <li class="li3"><p></p></li>
+                            <li style="margin-top: 10px;height: 140px;width: 310px;">习近平：历史研究是社会科学基础习近平：：历史研究是社会科学基础
+                            </li>
+                            <li style="font-size: 10px;text-align: right;">浏览次数：<span>1222</span>次</li>
+                        </ul>
+                    </div>
+
+
+                    <div class="book_min_three">
+                        <img src="../../static/img/logo.png" th:src="@{/img/logo.png}"/>
+                    </div>
+
+                </div>
+                <div class="news_book_min">
+                    <div class="book_min_one">
+                        <p class="p1">要闻</p>
+                        <p style="text-align: center;margin-top: 50px;font-size: 25px;">Jin</p>
+                    </div>
+
+                    <div class="book_min_two">
+                        <ul>
+                            <li style="color: #03A9F4;font-size: 18px;">习近平：历史研究是社会科学基础</li>
+                            <li class="li2"><p>2019</p>
+                                <p class="p2">新闻中心</p></li>
+                            <li class="li3"><p></p></li>
+                            <li style="margin-top: 10px;height: 140px;width: 310px;">习近平：历史研究是社会科学基础习近平：：历史研究是社会科学基础
+                            </li>
+                            <li style="font-size: 10px;text-align: right;">浏览次数：<span>1222</span>次</li>
+                        </ul>
+                    </div>
+
+
+                    <div class="book_min_three">
+                        <img src="../../static/img/logo.png" th:src="@{/img/logo.png}"/>
+                    </div>
+
+                </div>
+                <div class="news_book_min">
+                    <div class="book_min_one">
+                        <p class="p1">要闻</p>
+                        <p style="text-align: center;margin-top: 50px;font-size: 25px;">Jin</p>
+                    </div>
+
+                    <div class="book_min_two">
+                        <ul>
+                            <li style="color: #03A9F4;font-size: 18px;">习近平：历史研究是社会科学基础</li>
+                            <li class="li2"><p>2019</p>
+                                <p class="p2">新闻中心</p></li>
+                            <li class="li3"><p></p></li>
+                            <li style="margin-top: 10px;height: 140px;width: 310px;">习近平：历史研究是社会科学基础习近平：：历史研究是社会科学基础
+                            </li>
+                            <li style="font-size: 10px;text-align: right;">浏览次数：<span>1222</span>次</li>
+                        </ul>
+                    </div>
+
+
+                    <div class="book_min_three">
+                        <img src="../../static/img/logo.png" th:src="@{/img/logo.png}"/>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="news_book box2 bo">
+                1
+            </div>
+
+            <div class="news_book box3 bo">
+                2
+            </div>
+
+            <div class="daohan" style="height: 100px;">
+                导航
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="newmaion">
+        <div class="maion maion_top">
+            <ul>
+                <li style="font-size: 18px;">热门公告</li>
+                <li class="li2"></li>
+                <li class="box bo1"><p></p><span>热门公告</span></li>
+                <li class="box bo1"><p></p><span>热门公告</span></li>
+                <li class="box bo3"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+            </ul>
+        </div>
+
+        <div class="maion maion_bottom" style="margin-top: 50px;">
+            <ul>
+                <li style="font-size: 18px;">热门公告</li>
+                <li class="li2"></li>
+                <li class="box bo1"><p></p><span>热门公告</span></li>
+                <li class="box bo1"><p></p><span>热门公告</span></li>
+                <li class="box bo3"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+                <li class="box"><p></p><span>热门公告</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="bottum">
+    <img src="../../static/img/logo.png" th:src="@{/img/logo.png}"/>
+    <div class="bottum_bl">
+        <div class="logo">
+            <img src=""/>
+            <p>甘肃社区教育网</p>
+        </div>
+        <div class="new">
+            <ul>
+                <li style="font-weight: 600;font-size: 17px;">关于我们</li>
+                <li>官网简介</li>
+                <li>产品中心</li>
+                <li>服务中心</li>
+            </ul>
+        </div>
+        <div class="who">
+            <ul>
+                <li style="font-weight: 600;font-size: 17px;">联系我们</li>
+                <li>联系电话：18133533421</li>
+                <li>网站地址：www.gansustudy.com</li>
+                <li>公司网址：291254322@company.com</li>
+                <li>公司地址：甘肃省兰州市</li>
+            </ul>
+        </div>
+        <div class="web">
+            <img src=""/>
+            <p>官方微博</p>
+        </div>
+        <div class="web">
+            <img src=""/>
+            <p>官方微博</p>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../../static/js/jquery-3.3.1.min.js" th:src="@{js/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" src="../../static/js/index.js" th:src="@{/js/index.js}" ></script>
+<script type="text/javascript" src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" src="../../static/layui/lay/modules/laypage.js" th:src="@{//layui/lay/modules/laypage.js}"></script>
+<script>
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+        var totalRecord = 0;//初始化总记录数
+        var pageNum = 1;//初始化页数为第一页
+        var pageSize = 5;//每页显示条数
+        getNewsData();
+
+        function getNewsData(){
+            $.ajax({
+                type: "get",
+                async: false,
+                url: "/member/news/morenews",
+                data: {pageNum: pageNum, pageSize: pageSize},
+                success: function (data) {
+                    totalRecord = data.lawRightsList.total;//数据总条数
+                    console.log(data.lawRightsList.list);
+                    fillDataToPage(data)
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    console.log(XMLHttpRequest.status);
+                    console.log(XMLHttpRequest.readyState);
+                    console.log(textStatus);
+                }
+            });
+        }
+        // * 填充数据*
+        /*function fillDataToPage(data) {
+            var i = 0;
+            var html = "";
+            $.each(data.lawRightsList.list, function(i,result){
+                //转换日期格式，引入想对应的js
+                var addTime = new Date(result.gmtModified).Format("yyyy-MM-dd hh:mm:ss");
+
+                if (result.thumbnail == "") {
+                    html += "<li>"
+                    html += "<a title=" + result.title + " onclick='dj(" + result.id + ")'>" +
+                        "<img src='images/lnjy-no.jpg' width='300px' height='200px' /></a>"
+                    html += "<p><a title=" + result.title + " onclick='dj(" + result.id + ")'>" + result.title + "</a></p>"
+                    html += "</li>"
+                }
+                else {
+                    html += "<li>"
+                    html += "<a title=" + result.title + " onclick='dj(" + result.id + ")'>" +
+                        "<img src=" + result.thumbnail + " width='300px' height='200px' /></a>"
+                    html += "<p><a title=" + result.title + " onclick='dj(" + result.id + ")'>" + result.title + "</a></p>"
+                    html += "</li>"
+                }
+
+            });
+            $("#klsh").append(html);
+        }*/
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'text1' //注意，这里的 test1 是 ID，不用加 #号
+            , count: totalRecord //数据总数，从服务端得到
+            , curr: pageNum
+            , limit: pageSize
+            , jump: function (obj, first) {
+                //obj包含了当前分页的所有参数，比如：
+                pageNum = obj.curr;//得到当前页，以便向服务端请求对应页的数据。
+                pageSize = obj.limit;//得到每页显示的条数
+
+                //首次不执行
+                if (!first) {
+                    //do something
+                    $('.clearfix').empty();
+                    getNewsData();
+                }
+            }
+        });
+    });
+    function dj(id){
+        window.location.href="lnjy_flwq_xq.html?id="+id;
+    }
+
+</script>
+</html>
+

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.QuestionnaireMapper" >
+
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.Questionnaire" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="course_id" property="courseId" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+
+  <!--查询调查问卷信息  关联问题表和选项表-->
+  <resultMap id="BaseMap" type="com.zr.gansu.domain.Questionnaire" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <collection property="questions" javaType="ArrayList" ofType="com.zr.gansu.domain.Question" resultMap="QuestionMap" columnPrefix="q_"/>
+  </resultMap>
+
+  <resultMap id="QuestionMap" type="com.zr.gansu.domain.Question" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="questionnaire_id" property="questionnaireId" jdbcType="BIGINT" />
+    <result column="question" property="question" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="question_no" property="questionNo" jdbcType="INTEGER" />
+    <collection property="options" javaType="ArrayList" ofType="com.zr.gansu.domain.Option" resultMap="OptionMap" columnPrefix="op_"/>
+  </resultMap>
+
+  <resultMap id="OptionMap" type="com.zr.gansu.domain.Option" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="question_id" property="questionId" jdbcType="BIGINT" />
+    <result column="options" property="options" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+  <sql id="Questionnaire_Column_List">
+     qn.id,qn.title,qn.gmt_create,
+</sql>
+
+  <sql id="Question_Column_List">
+    q.id as q_id,q.questionnaire_id as q_questionnaire_id,q.question as q_question,
+    q.type as q_type,q.question_no as q_question_no,q.gmt_create as q_gmt_create,
+</sql>
+
+  <sql id="Option_Column_List">
+    op.id as q_op_id,op.question_id as q_op_question_id,op.options as q_op_options,
+    op.content as q_op_content,op.gmt_create as q_op_gmt_create
+</sql>
+
+  <!--查询问卷调查信息 关联问题表和选择表-->
+  <select id="selectQuestionnaire" resultMap="BaseMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Questionnaire_Column_List"/>
+    <include refid="Question_Column_List" />
+    <include refid="Option_Column_List" />
+    from tbl_questionnaire qn
+    left outer join tbl_question q on qn.id = q.questionnaire_id
+    left outer join tbl_option op on q.id = op.question_id
+    where qn.id = #{id,jdbcType=BIGINT} and qn.is_deleted = 1 and qn.status = 1
+    order by q.question_no ASC,q.gmt_create ASC,op.id ASC
+  </select>
+
+  <sql id="Base_Column_List" >
+    id, title, creator_id, course_id, gmt_create, gmt_modified,
+    is_deleted,status
+  </sql>
+
+  <!--查询问卷基本信息-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_questionnaire
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!--删除调查问卷信息 用于未保存状态下删除-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_questionnaire
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert"  useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="com.zr.gansu.domain.Questionnaire" >
+    insert into tbl_questionnaire (id, title, creator_id, course_id, gmt_create, gmt_modified, is_deleted,status
+      )
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},
+      #{creatorId,jdbcType=BIGINT}, #{courseId,jdbcType=BIGINT},
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.Questionnaire" >
+    update tbl_questionnaire
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null" >
+        course_id = #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!--删除调查问卷  逻辑删除-->
+  <update id="updateIsDeleted" parameterType="com.zr.gansu.domain.Questionnaire" >
+    update tbl_questionnaire
+    set is_deleted = 0
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!--修改问卷状态为可发布-->
+  <update id="updateStatus" parameterType="com.zr.gansu.domain.Questionnaire" >
+    update tbl_questionnaire
+    set status = 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学分商城</title>
+    <div th:replace="/common/publicCss :: onloadCss"></div>
+    <link rel="stylesheet" href="../../static/css/creditShop.css" th:href="@{/css/creditShop.css}">
+    <link rel="stylesheet" href="../../static/css/iconfont.css" th:href="@{/css/iconfont.css}">
+
+</head>
+<body>
+    <!--头部-->
+    <div class="herd">
+        <!-- 轮播 -->
+        <div id="myCarousel" class="carousel slide">
+            <div class="carousel-inner" style="height: 800px;">
+                <div class="item active">
+                    <img src="../../static/img/creditShop.jpg" alt="First slide" th:src="@{/img/creditShop.jpg}">
+                </div>
+            </div>
+        </div>
+        <!-- 轮播 end-->
+        <div class="shop">
+            <p>学分商城</p>
+        </div>
+        <div class="herd_dao">
+            <div class="herd_one">
+                <img src="../../static/img/LOGO1.png" th:src="@{/img/LOGO1.png}" style="width: 70%;" />
+            </div>
+            <div class="herd_two">
+                <ul>
+                    <li><p class="min">首页</p></li>
+                    <li><p class="max">社区教育</p></li>
+                    <li><p class="max">在线课程</p></li>
+                    <li><p class="max">教育直播</p></li>
+                    <li><a href="/member/skip/shop" class="max">学分商城</a></li>
+                    <li><p class="min">我的</p></li>
+                </ul>
+            </div>
+            <div class="herd_three">
+                <ul>
+                    <li style="width: 15%;"><i class="layui-icon layui-icon-notice"></i></li>
+                    <li style="margin-top: 33px;width: 25%;"><a href="/my/user/login/page.html"><p><i class="layui-icon layui-icon-vercode"></i>登录</p></a></li>
+                    <li style="margin-top: 33px;width: 25%;"><a href="/my/user/sign/page.html"><p><i class="layui-icon layui-icon-user"></i>注册</p></a></li>
+                    <li style="margin-top: 33px;width: 25%;"><a href="/logout"><p style="width:100px"><i class="layui-icon layui-icon-user"></i>退出登录</p></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--头部 end-->
+
+    <!--中间内容部分-->
+    <div class="container">
+        <div class="notice">
+            <div class="row">
+                <div class="span3 register">
+                    <p class="loginIcon"><i class="iconfont icon-icon"></i></p>
+                    <p>还没登录?请登录</p>
+                    <p>注册</p>
+                </div>
+                <div class="span6 bulletin">
+                    <div class="span1">
+                        <p class="p1"><i class="iconfont icon-gonggao"></i>公告</p>
+                    </div>
+                    <div class="span5">
+                        <ul>
+                            <li>小光头兑换了商品经典杭帮菜视频教程</li>
+                            <li>小光头兑换了商品经典杭帮菜视频教程</li>
+                            <li>小光头兑换了商品经典杭帮菜视频教程</li>
+                            <li>小光头兑换了商品经典杭帮菜视频教程</li>
+                            <li>小光头兑换了商品经典杭帮菜视频教程</li>
+                            <li>小光头兑换了商品经典杭帮菜视频教程</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="span2 integral">
+                    <!--<span class="">学分获得规则</span><br>-->
+                    <!--<a>积分兑换规则</a>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--中间内容部分 end-->
+
+    <!--底部-->
+    <div th:include="/common/publicJs :: onloadJS"></div>
+    <!--底部 end-->
+
+    <script src="../../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js" th:src="@{bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

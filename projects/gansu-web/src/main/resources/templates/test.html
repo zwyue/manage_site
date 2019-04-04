@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <title>测试类</title>
+</head>
+<body>
+
+    <!--班级管理新增内容-->
+    <div class="layui-body yhglContent">
+
+        <!--编辑内容-->
+        <div class="lsglContent">
+            <form class="layui-form filter" action="" id="filter">
+            	<div class="layui-form-item">
+	                <div class="layui-inline">
+	                    <label class="layui-form-label">班级名称：</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="id" id="id" lay-verify="required" class="layui-input inputTop" />
+	                    </div>
+	                </div>
+	            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">班级计划人数：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="test" name="classrs" class="layui-input inputTop" />
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+
+
+    <a href="javascript:" class="bcBtn" onclick="save()">保存</a>
+
+</div>
+<!--班级管理内容end-->
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script>
+
+    function save() {
+        var id=$("#id").val();
+        // var passWord=$("#password").val();
+
+        $.ajax({
+            url:"/member/user/updatevolunteerstate",
+            type:'POST',
+            dataType:'json',
+            async:false,
+            data:{
+                'id':id,
+                // 'password':passWord
+            },
+            success:function(data){
+                console.log(data);
+            },
+            error:function(){
+                console.log('错误！')
+            }
+        })
+    }
+
+
+</script>
+
+</body>
+</html>

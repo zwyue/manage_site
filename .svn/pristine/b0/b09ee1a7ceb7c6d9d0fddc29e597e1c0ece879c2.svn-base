@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>订单列表</title>
+		<link rel="stylesheet" href="../static/css/global.css" />
+		<link rel="stylesheet" href="../static/css/index.css" />
+		<link rel="stylesheet" href="../static/layui/css/layui.css" />
+	</head>
+	<body>
+		<p class="name">你好：<span>管理员</span></p>
+		<div class="activ_look">
+			<div class="look_one">
+				 <div class="div1" style="width: 25%;">
+				 	订单编号：<input type="text" style="height: 25px;width: 230px;"/>
+				 </div>
+				 
+				 <p class="p1">查询</p>
+			</div>
+			<div class="look_two">
+				<div class="account_table">
+					<div class="table_herd">
+						<p class="p1">订单列表</p>
+						
+					</div>
+					<div class="table">
+						<table>
+							<tr>
+								<th>序号</th>
+								<th>商品名称</th>
+								<th>购买时间</th>
+								<th>状态</th>
+								<th>操作</th>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td><p class="p1">编辑</p></td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td><p class="p1">编辑</p></td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td><p class="p1">编辑</p></td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td><p class="p1">编辑</p></td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td><p class="p1">编辑</p></td>
+							</tr>
+						</table>
+					</div>
+					<div id="demo2" style="text-align: center;margin-top: 20px;"></div>
+ 				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../static/layui/layui.js" ></script>
+		<script>
+			layui.use('laypage', function(){
+			  var laypage = layui.laypage;
+			  
+			 laypage.render({
+			    elem: 'demo2'
+			    ,count: 100
+			    ,theme: '#1E9FFF'
+			  });
+			});
+			
+			
+		
+		</script>
+	</body>
+</html>

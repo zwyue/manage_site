@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.CreditRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.CreditRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="change_count" property="changeCount" jdbcType="INTEGER" />
+    <result column="previous_credit" property="previousCredit" jdbcType="INTEGER" />
+    <result column="now_credit" property="nowCredit" jdbcType="INTEGER" />
+    <result column="news_id" property="newsId" jdbcType="BIGINT" />
+    <result column="course_period_id" property="coursePeriodId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sun" property="sun" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, type, change_count, previous_credit, now_credit, news_id, course_period_id,
+    goods_id, gmt_create, gmt_modified, is_deleted
+  </sql>
+
+  <select id="statisticsGoods" resultMap="BaseResultMap">
+    SELECT goods_id , name,count(goods_id='sun') AS 'sun'
+    FROM tbl_credit_record LEFT JOIN tbl_goods on  tbl_credit_record.goods_id =  tbl_goods.id
+    WHERE tbl_credit_record.is_deleted = 1
+    GROUP BY goods_id
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_credit_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_credit_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zr.gansu.domain.CreditRecord" >
+    insert into tbl_credit_record (id, user_id, type,
+      change_count, previous_credit, now_credit,
+      news_id, course_period_id, goods_id,
+      gmt_create, gmt_modified, is_deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER},
+      #{changeCount,jdbcType=INTEGER}, #{previousCredit,jdbcType=INTEGER}, #{nowCredit,jdbcType=INTEGER},
+      #{newsId,jdbcType=BIGINT}, #{coursePeriodId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT},
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zr.gansu.domain.CreditRecord" >
+    insert into tbl_credit_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="changeCount != null" >
+        change_count,
+      </if>
+      <if test="previousCredit != null" >
+        previous_credit,
+      </if>
+      <if test="nowCredit != null" >
+        now_credit,
+      </if>
+      <if test="newsId != null" >
+        news_id,
+      </if>
+      <if test="coursePeriodId != null" >
+        course_period_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="changeCount != null" >
+        #{changeCount,jdbcType=INTEGER},
+      </if>
+      <if test="previousCredit != null" >
+        #{previousCredit,jdbcType=INTEGER},
+      </if>
+      <if test="nowCredit != null" >
+        #{nowCredit,jdbcType=INTEGER},
+      </if>
+      <if test="newsId != null" >
+        #{newsId,jdbcType=BIGINT},
+      </if>
+      <if test="coursePeriodId != null" >
+        #{coursePeriodId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.CreditRecord" >
+    update tbl_credit_record
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="changeCount != null" >
+        change_count = #{changeCount,jdbcType=INTEGER},
+      </if>
+      <if test="previousCredit != null" >
+        previous_credit = #{previousCredit,jdbcType=INTEGER},
+      </if>
+      <if test="nowCredit != null" >
+        now_credit = #{nowCredit,jdbcType=INTEGER},
+      </if>
+      <if test="newsId != null" >
+        news_id = #{newsId,jdbcType=BIGINT},
+      </if>
+      <if test="coursePeriodId != null" >
+        course_period_id = #{coursePeriodId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zr.gansu.domain.CreditRecord" >
+    update tbl_credit_record
+    set user_id = #{userId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      change_count = #{changeCount,jdbcType=INTEGER},
+      previous_credit = #{previousCredit,jdbcType=INTEGER},
+      now_credit = #{nowCredit,jdbcType=INTEGER},
+      news_id = #{newsId,jdbcType=BIGINT},
+      course_period_id = #{coursePeriodId,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

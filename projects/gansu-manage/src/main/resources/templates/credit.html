@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>设置学分</title>
+		<link rel="stylesheet" href="../static/css/global.css" />
+		<link rel="stylesheet" href="../static/css/index.css" />
+		<link rel="stylesheet" href="../static/layui/css/layui.css" />
+	</head>
+	<body>
+		<p class="name">你好：<span>管理员</span></p>
+		<div class="credit">
+			<div class="news_herd">
+				<p class="p1">设置学分</p>
+				<p class="p2">返回</p>
+			</div>
+			<div class="credit_tion">
+				 <div class="dome">
+				 	<div class="dome_bg">
+				 		<div class="dome_min">
+				 			<img src="../static/img/1.png" />
+				 		</div>
+				 	</div>
+				 	<div class="num">
+		  						<p class="p1 jian1">-</p>
+		  						<input type="text" id="num1" value="0">
+		  						<p class="p3 jia1">+</p>
+					</div>
+					<p class="text">观看课程</p>
+				 </div>
+				  <div class="dome">
+				 	<div class="dome_bg">
+				 		<div class="dome_min">
+				 			<img src="../static/img/2.png" />
+				 		</div>
+				 	</div>
+				 	<div class="num">
+		  						<p class="p1 jian2">-</p>
+		  						<input type="text" id="num2" value="0">
+		  						<p class="p3 jia2">+</p>
+					</div>
+					<p class="text">观看课程</p>
+				 </div>
+				  <div class="dome">
+				 	<div class="dome_bg">
+				 		<div class="dome_min">
+				 			<img src="../static/img/3.png" />
+				 		</div>
+				 	</div>
+				 	<div class="num">
+		  						<p class="p1 jian3">-</p>
+		  						<input type="text" id="num3" value="0">
+		  						<p class="p3 jia3">+</p>
+					</div>
+					<p class="text">观看图文资源</p>
+				  </div>
+				  <div class="dome">
+				 	<div class="dome_bg">
+				 		<div class="dome_min">
+				 			<img src="../static/img/4.png" />
+				 		</div>
+				 	</div>
+				 	<div class="num">
+		  						<p class="p1 jian4">-</p>
+		  						<input type="text" id="num4" value="0">
+		  						<p class="p3 jia4">+</p>
+					</div>
+					<p class="text">观看视频资源</p>
+				 </div>
+				  <div class="dome">
+				 	<div class="dome_bg">
+				 		<div class="dome_min">
+				 			<img src="../static/img/5.png" />
+				 		</div>
+				 	</div>
+				 	<div class="num">
+		  						<p class="p1 jian5">-</p>
+		  						<input type="text" id="num5" value="0">
+		  						<p class="p3 jia5">+</p>
+					</div>
+					<p class="text">报名活动</p>
+				 </div>
+			</div>
+			
+			<p class="good_btn">完成</p>
+		</div>
+		<script type="text/javascript" src="../static/js/jquery-3.3.1.min.js" ></script>
+		<script>
+			$('.num .jian1').click(function(){
+    		var n=$('#num1').val();
+		    var num1=parseInt(n)-1;
+		    if(num1==0){ return}
+		   	$('#num1').val(num1);
+    		})
+    	
+    		$('.num .jia1').click(function(){
+    		
+    		 var n=$('#num1').val();
+			    var num1=parseInt(n)+1;
+			    if(num1==0){ return;}
+			    $('#num1').val(num1);
+    		})
+    		
+    		
+    		$('.num .jian2').click(function(){
+    		var n=$('#num2').val();
+		    var num2=parseInt(n)-1;
+		    if(num2==0){ return}
+		   	$('#num2').val(num2);
+    		})
+    	
+    		$('.num .jia2').click(function(){
+    		
+    		 var n=$('#num2').val();
+			    var num2=parseInt(n)+1;
+			    if(num2==0){ return;}
+			    $('#num2').val(num2);
+    		})
+    		
+    		
+    		$('.num .jian3').click(function(){
+    		var n=$('#num3').val();
+		    var num3=parseInt(n)-1;
+		    if(num3==0){ return}
+		   	$('#num3').val(num3);
+    		})
+    	
+    		$('.num .jia3').click(function(){
+    		
+    		 var n=$('#num3').val();
+			    var num3=parseInt(n)+1;
+			    if(num3==0){ return;}
+			    $('#num3').val(num3);
+    		})
+    		
+    		
+    		
+    		$('.num .jian4').click(function(){
+    		var n=$('#num4').val();
+		    var num4=parseInt(n)-1;
+		    if(num4==0){ return}
+		   	$('#num4').val(num4);
+    		})
+    	
+    		$('.num .jia4').click(function(){
+    		
+    		 var n=$('#num4').val();
+			    var num4=parseInt(n)+1;
+			    if(num4==0){ return;}
+			    $('#num4').val(num4);
+    		})
+    		
+    		
+    		
+    		$('.num .jian5').click(function(){
+    		var n=$('#num5').val();
+		    var num5=parseInt(n)-1;
+		    if(num5==0){ return}
+		   	$('#num5').val(num1);
+    		})
+    	
+    		$('.num .jia5').click(function(){
+    		
+    		 var n=$('#num5').val();
+			    var num5=parseInt(n)+1;
+			    if(num5==0){ return;}
+			    $('#num5').val(num5);
+    		})
+		</script>
+	</body>
+</html>

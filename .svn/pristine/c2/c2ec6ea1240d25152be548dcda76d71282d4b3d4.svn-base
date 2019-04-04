@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.AnswerMapper" >
+
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.Answer" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="questionnaire_id" property="questionnaireId" jdbcType="BIGINT" />
+    <result column="question_id" property="questionId" jdbcType="BIGINT" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, user_id, questionnaire_id, question_id, answer, gmt_create, gmt_modified, is_deleted
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_answer
+    where question_id = #{questionId,jdbcType=BIGINT}
+  </select>
+
+<!--统计该题选A的人数百分比-->
+  <select id="countA" resultType="float" parameterType="java.lang.Long" >
+    select ROUND(T1.co/T2.totalCo*100,2) AS persentA
+	from (SELECT COUNT(id) AS co FROM tbl_answer where question_id = #{questionId} AND answer LIKE concat(concat("%",'A'),"%")) T1,
+	(SELECT COUNT(id) AS totalCo FROM tbl_answer WHERE question_id = #{questionId}) T2
+  </select>
+
+  <!--统计该题选B的人数百分比-->
+  <select id="countB" resultType="float" parameterType="java.lang.Long" >
+    select ROUND(T1.co/T2.totalCo*100,2) AS persentB
+	from (SELECT COUNT(id) AS co FROM tbl_answer where question_id = #{questionId} AND answer LIKE concat(concat("%",'B'),"%")) T1,
+	(SELECT COUNT(id) AS totalCo FROM tbl_answer WHERE question_id = #{questionId}) T2
+  </select>
+
+  <!--统计该题选C的人数百分比-->
+  <select id="countC" resultType="float" parameterType="java.lang.Long" >
+    select ROUND(T1.co/T2.totalCo*100,2) AS persentC
+	from (SELECT COUNT(id) AS co FROM tbl_answer where question_id = #{questionId} AND answer LIKE concat(concat("%",'C'),"%")) T1,
+	(SELECT COUNT(id) AS totalCo FROM tbl_answer WHERE question_id = #{questionId}) T2
+  </select>
+
+  <!--统计该题选D的人数百分比-->
+  <select id="countD" resultType="float" parameterType="java.lang.Long" >
+    select ROUND(T1.co/T2.totalCo*100,2) AS persentD
+	from (SELECT COUNT(id) AS co FROM tbl_answer where question_id = #{questionId} AND answer LIKE concat(concat("%",'D'),"%")) T1,
+	(SELECT COUNT(id) AS totalCo FROM tbl_answer WHERE question_id = #{questionId}) T2
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_answer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.zr.gansu.domain.Answer" >
+    insert into tbl_answer (id, user_id, questionnaire_id, 
+      question_id, answer, gmt_create, 
+      gmt_modified, is_deleted)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{questionnaireId,jdbcType=BIGINT}, 
+      #{questionId,jdbcType=BIGINT}, #{answer,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER})
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.Answer" >
+    update tbl_answer
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="questionnaireId != null" >
+        questionnaire_id = #{questionnaireId,jdbcType=BIGINT},
+      </if>
+      <if test="questionId != null" >
+        question_id = #{questionId,jdbcType=BIGINT},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.ThemeColorMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.ThemeColor" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="theme_color" property="themeColor" jdbcType="VARCHAR"  />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, theme_color,status, gmt_create, gmt_modified
+  </sql>
+
+  <!--查询所有的主题-->
+  <select id="getThemeColorAll" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_themecolor
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_themecolor
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!--查询前台展示的主题-->
+  <select id="getThemeEnable" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_themecolor
+    where status = 1
+    order by gmt_modified  desc limit 1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_themecolor
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.zr.gansu.domain.ThemeColor" >
+    insert into tbl_themecolor (id, theme_color,status, gmt_create,
+      gmt_modified)
+    values (#{id,jdbcType=BIGINT}, #{themeColor,jdbcType=VARCHAR},#{status,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.ThemeColor" >
+    update tbl_themecolor
+    <set >
+      <if test="themeColor != null" >
+        theme_color = #{themeColor,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>社交账号状态</title>
+    <link rel="stylesheet" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" />
+</head>
+<body>
+<h2>当前qq绑定状态:</h2>
+<span id="qqStatus">未绑定</span>
+<form method="post" action="/connect/qq" id="toQQForm" class="layui-form" style="display: none">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit lay-filter="bindQQ">立即绑定</button>
+        </div>
+    </div>
+</form>
+
+<form id="deleteBindQQ" class="layui-form" style="display: none">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="DeleteBindQQ">解除QQ账号绑定!</button>
+        </div>
+    </div>
+</form>
+
+<script src="../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="../static/layui/layui.all.js" th:src="@{/layui/layui.all.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        //获取当前qq绑定状态,并渲染数据至上方
+        $.ajax({
+                type: "GET",
+                url: "/connect",
+                contentType: "application/json;charset=UTF-8",
+                success: function (data) {
+                    if(data.qq===true){
+                        //已绑定,显示状态,展示解绑按钮
+                      $("#qqStatus").text("已绑定!")
+                        $("#deleteBindQQ").css("display","block");
+                    }else {
+                        //未绑定,显示状态,展示绑定按钮
+                        $("#qqStatus").text("未绑定!")
+                        $("#toQQForm").css("display","block");
+                    }
+                },
+                error: function () {
+                    layer.msg("网络错误");
+                }
+
+            });
+
+        var form = layui.form;
+        //监听提交
+        form.on('submit(DeleteBindQQ)', function(){
+            $.ajax({
+                type: "DELETE",
+                url: "/connect/ajax/qq",
+                contentType: "application/json;charset=UTF-8",
+                success: function (data) {
+                    console.log(data);
+                    layer.msg("解除绑定成功!");
+                    window.location.reload();
+                },
+                error: function () {
+                    layer.msg("网络错误");
+                }
+
+            });
+            return false;
+        });
+        });
+</script>
+</body>
+</html>

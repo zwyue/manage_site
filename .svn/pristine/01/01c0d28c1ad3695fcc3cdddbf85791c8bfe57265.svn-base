@@ -1,0 +1,42 @@
+# 所有环境通用的配置，放在这里
+#设置服务启动端口
+server.port=80
+
+#设置启用的spring配置文件
+#开发环境配置
+spring.profiles.active=dev,daoDev,commonDev
+#测试环境配置
+#spring.profiles.active=test,daoTest,commonTest
+#生产环境配置
+#spring.profiles.active=prod,daoProd,commonProd
+
+#thymelea模板配置
+spring.thymeleaf.prefix=classpath:/templates/
+spring.thymeleaf.suffix=.html
+spring.thymeleaf.mode=HTML5
+#热部署文件，页面不产生缓存，及时更新
+spring.thymeleaf.cache=false
+spring.resources.chain.strategy.content.enabled=true
+spring.resources.chain.strategy.content.paths=/**
+
+logging.level.org.springframework.security= DEBUG
+#QQ授权登录地址
+#https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101448999&redirect_uri=http://www.merryyou.cn/login/qq&state=test
+
+#QQ登录配置
+#merryyou id=101448999
+#merryyou secret=1d958787a87559bad371c0a9e26eef61
+gansu.security.social.qqAppId=101558748
+gansu.security.social.qqAppSecret=260a4fad11707dc614fa69fb5900df53
+gansu.security.social.qqProviderId=qq
+
+#社交登录功能拦截的url,参见SocilaProperties
+#imooc.security.social.filterProcessesUrl = /qqLogin
+
+#
+###指定bean所在包
+##mybatis.type-aliases-package=com.qexz.model
+###指定映射文件
+##mybatis.mapperLocations=classpath:mapper/*.xml
+
+spring.aop.proxy-target-class=false

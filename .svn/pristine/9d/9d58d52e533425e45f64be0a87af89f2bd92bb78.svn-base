@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>志愿者列表</title>
+		<link rel="stylesheet" href="../static/css/global.css" />
+		<link rel="stylesheet" href="../static/css/index.css" />
+		<link rel="stylesheet" href="../static/layui/css/layui.css" />
+	</head>
+	<body>
+		<p class="name">你好：<span>管理员</span></p>
+		<div class="activ_look">
+			<div class="look_one">
+				 <div class="div1" style="width: 30%;">
+				 	申请人名称：<input type="text" style="height: 25px;"/>
+				 </div>
+				 <div class="div1" style="width: 30%;">
+				 	审批状态：<select>
+				 		<option>未审批</option>
+				 		<option>已审批</option>
+				 		<option>待审批</option>
+				 	</select>
+				 </div>
+				 <p class="p1">查询</p>
+			</div>
+			<div class="look_two">
+				<div class="account_table">
+					<div class="table_herd">
+						<p class="p1">人员列表</p>
+						
+					</div>
+					<div class="table">
+						<table>
+							<tr>
+								<th>序号</th>
+								<th>申请人名称</th>
+								<th>申请时间</th>
+								<th>联系号码</th>
+								<th>操作</th>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td><p class="p1">审批</p></td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td><p class="p1">审批</p></td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td><p class="p1">审批</p></td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td><p class="p1">审批</p></td>
+							</tr>
+							<tr class="rig">
+								<td>1</td>
+								<td>张三</td>
+								<td>2019-10-10</td>
+								<td>13676865642</td>
+								<td><p class="p1">审批</p></td>
+							</tr>
+						</table>
+					</div>
+					<div id="demo2" style="text-align: center;margin-top: 20px;"></div>
+ 				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../static/layui/layui.js" ></script>
+		<script>
+			layui.use('laypage', function(){
+			  var laypage = layui.laypage;
+			  
+			 laypage.render({
+			    elem: 'demo2'
+			    ,count: 100
+			    ,theme: '#1E9FFF'
+			  });
+			});
+			
+			
+		
+		</script>
+	</body>
+</html>

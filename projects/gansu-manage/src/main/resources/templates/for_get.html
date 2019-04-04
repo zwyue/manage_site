@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../static/css/global.css" />
+		<link rel="stylesheet" href="../static/css/index.css" />
+		<link rel="stylesheet" href="../static/layui/css/layui.css" />
+	</head>
+	<style>
+		body,
+		html {
+			width: 100%;
+			height: 100%;
+		}
+		
+		
+	</style>
+
+	<body>
+		<div class="forget"></div>
+		<div class="img_logo">
+			<img src="../static/img/LOGO1.png" style="margin-bottom: 60px;"/>
+			<div class="table">
+				<p class="p1">忘记密码</p>
+				<div class="border">
+					<p class="p3"></p>
+				</div>
+				<form class="layui-form">	
+				<div class="layui-form-item" style="margin: 40px;">
+					<label class="layui-form-label">身份级别</label>
+					<div class="layui-input-block">
+						<select name="city" lay-verify="required">
+							<option value=""></option>
+							<option value="0">一级管理员</option>
+							<option value="1">二级管理员</option>
+							
+						</select>
+					</div>
+				</div>
+			</form>
+			
+			<p style="margin-right: 160px;color: #8e8d8d;">1、请发邮件至<span style="color:#00adff ;">1875991330@qq.com</span></p>
+			<p style="margin-right: 212px;margin-top: 10px; color: #8e8d8d; margin-bottom: 100px;">2、或是电话至<span style="color:#00adff ;">15755311333</span></p>
+			<p class="but">确定</p>
+			</div>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../static/layui/layui.js" ></script>
+	<script>
+//Demo
+layui.use('form', function(){
+  var form = layui.form;
+  
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+    layer.msg(JSON.stringify(data.field));
+    return false;
+  });
+});
+</script>
+
+</html>

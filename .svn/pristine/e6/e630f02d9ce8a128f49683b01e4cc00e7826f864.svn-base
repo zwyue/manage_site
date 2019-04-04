@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.NewsMapper" >
+  <!--查询新闻详情，包含新闻分类标签 后台查询-->
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.News" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="content_id" property="contentId" jdbcType="BIGINT" />
+    <result column="view_count" property="viewCount" jdbcType="BIGINT" />
+    <result column="like_count" property="likeCount" jdbcType="BIGINT" />
+    <result column="collection_count" property="collectionCount" jdbcType="BIGINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="site_id" property="siteId" jdbcType="BIGINT" />
+    <result column="tag_id" property="tagId" jdbcType="BIGINT" />
+    <association property="newsText"  javaType="com.zr.gansu.domain.NewsText">
+      <id property="id" column="content_id" />
+      <result property="content" column="content" />
+    </association>
+    <association property="site"  javaType="com.zr.gansu.domain.Site">
+      <id property="id" column="site_id" />
+      <result property="name" column="name" />
+    </association>
+    <association property="tag"  javaType="com.zr.gansu.domain.Tag">
+      <id property="id" column="tag_id" />
+      <result property="tagName" column="tagName" />
+    </association>
+  </resultMap>
+
+  <!--查询后台新闻列表-->
+  <resultMap id="BackListResultMap" type="com.zr.gansu.domain.News" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="view_count" property="viewCount" jdbcType="BIGINT" />
+    <result column="like_count" property="likeCount" jdbcType="BIGINT" />
+    <result column="collection_count" property="collectionCount" jdbcType="BIGINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="tag_id" property="tagId" jdbcType="BIGINT" />
+    <association property="tag"  javaType="com.zr.gansu.domain.Tag">
+      <id property="id" column="id" />
+      <result property="tagName" column="tagName" />
+    </association>
+  </resultMap>
+
+  <!--查询主站首页新闻展示-->
+  <resultMap id="NewsIndexResultMap" type="com.zr.gansu.domain.News">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!--查询新闻咨询页新闻展示-->
+  <resultMap id="NewsResultMap" type="com.zr.gansu.domain.News">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!--查询新闻内容详情 前台展示-->
+  <resultMap id="NewsDetailResultMap" type="com.zr.gansu.domain.News">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="view_count" property="viewCount" jdbcType="BIGINT" />
+    <result column="like_count" property="likeCount" jdbcType="BIGINT" />
+    <result column="content_id" property="contentId" jdbcType="BIGINT" />
+    <association property="newsText"  javaType="com.zr.gansu.domain.NewsText">
+      <id property="id" column="content_id" />
+      <result property="content" column="content" />
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, title, description, content_id, view_count, like_count, collection_count, creator, 
+    thumbnail, status, updator, attachment, key_words, gmt_create, gmt_modified, is_deleted, 
+    site_id,tag_id
+  </sql>
+
+  <!--根据站点id查询对应站点的新闻信息 前台首页展示-->
+  <select id="getNewsListBySiteId" resultMap="NewsIndexResultMap" parameterType="java.lang.Long">
+    select
+      id, title,thumbnail from tbl_news
+    where  site_id= #{siteId,jdbcType=BIGINT} and is_deleted=1
+    order by gmt_create DESC limit 0,6
+  </select>
+
+  <!--查询新闻 前台新闻咨询页展示-->
+  <select id="getNewsListMore" resultMap="NewsResultMap" parameterType="java.lang.Long">
+    select
+      id, title,thumbnail,description,gmt_create from tbl_news
+    where  site_id= #{siteId,jdbcType=BIGINT} and is_deleted=1
+    order by gmt_create DESC
+  </select>
+
+  <!--查询新闻详细信息 前台展示-->
+  <select id="getNewsDetailById" resultMap="NewsDetailResultMap" parameterType="java.lang.Long">
+    select
+      news.id, news.title, news.content_id, news.view_count, news.like_count, news.gmt_create, newsText.id,newsText.content
+    from tbl_news news,tbl_news_text newsText
+    where news.content_id = newsText.id  and news.id =#{id,jdbcType=BIGINT}
+  </select>
+
+<!--后台查询新闻详情 关联新闻内容表、新闻分类表-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select 
+     news.id, news.title, news.description, news.content_id, news.view_count, news.like_count, news.collection_count, news.creator,
+     news.thumbnail,news.updator, news.gmt_create, news.gmt_modified,news.tag_id,newsText.id,newsText.content,tag.id,
+     tag.tagName
+    from tbl_news news,tbl_news_text newsText,tbl_tag tag
+    where news.id = #{id,jdbcType=BIGINT} and news.is_deleted = 1 and news.content_id = newsText.id
+    and news.tag_id = tag.id
+  </select>
+
+  <!-- 站点管理员获取对应站点新闻信息列表 后台列表展示-->
+  <select id="getNewsBackList" resultMap="BackListResultMap" parameterType="java.lang.Long">
+    select
+      news.id, news.title, news.description,news.view_count, news.like_count, news.collection_count, news.creator,
+    news.gmt_create, news.gmt_modified, news.tag_id,tag.id,tag.tagName from tbl_news news,tbl_tag tag
+    where news.tag_id = tag.id and news.site_id = #{siteId,jdbcType=BIGINT} and  is_deleted = 1
+    order by news.gmt_create desc
+  </select>
+
+  <!--查询该标签下是否存在新闻-->
+  <select id="countNews" resultType="int" parameterType="java.lang.Long">
+        select count(id) from tbl_news
+        where  tag_id = #{tagId,jdbcType=BIGINT}
+   </select>
+
+  <!--新增新闻 后台操作-->
+  <insert id="insertSelective" parameterType="com.zr.gansu.domain.vo.NewsVo">
+    insert into tbl_news
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="contentId != null" >
+        content_id,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="thumbnail != null" >
+        thumbnail,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="siteId != null" >
+        site_id,
+      </if>
+      <if test="tagId != null" >
+        tag_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="contentId != null" >
+        #{contentId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnail != null" >
+        #{thumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=BIGINT},
+      </if>
+      <if test="tagId != null" >
+        #{tagId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <!--更新新闻信息-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.vo.NewsVo" >
+    update tbl_news
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="contentId != null" >
+        content_id = #{contentId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnail != null" >
+        thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="siteId != null" >
+        site_id = #{siteId,jdbcType=BIGINT},
+      </if>
+      <if test="tagId != null" >
+        tag_id = #{tagId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+<!--删除新闻 逻辑删除-->
+  <update id="deleteNewsById" parameterType="java.lang.Long" >
+    update tbl_news
+     set is_deleted = 0
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

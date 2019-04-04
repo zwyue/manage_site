@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zr.gansu.dao.CollectionDomainMapper" >
+  <resultMap id="BaseResultMap" type="com.zr.gansu.domain.CollectionDomain" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="course_id" property="courseId" jdbcType="BIGINT" />
+    <result column="collection_time" property="collectionTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, course_id, collection_time, status, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_collection
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!--根据userId和courseId查询-->
+  <select id="findByUserIdAndCourseId" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List"/>
+    from tbl_collection
+    where
+      user_id = #{userId,jdbcType=BIGINT}
+      and course_id = #{courseId,jdbcType=BIGINT}
+      and is_deleted = 1;
+  </select>
+  <!--根据userID查找-->
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tbl_collection
+    where
+    user_id = #{userId,jdbcType=BIGINT}
+    and is_deleted = 1;
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tbl_collection
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zr.gansu.domain.CollectionDomain" >
+    insert into tbl_collection (id, user_id, course_id, 
+      collection_time, status, gmt_create, 
+      gmt_modified)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{courseId,jdbcType=BIGINT}, 
+      #{collectionTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zr.gansu.domain.CollectionDomain">
+    insert into tbl_collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="courseId != null" >
+        course_id,
+      </if>
+      <if test="collectionTime != null" >
+        collection_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null" >
+        #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="collectionTime != null" >
+        #{collectionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.gansu.domain.CollectionDomain" >
+    update tbl_collection
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null" >
+        course_id = #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="collectionTime != null" >
+        collection_time = #{collectionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zr.gansu.domain.CollectionDomain" >
+    update tbl_collection
+    set user_id = #{userId,jdbcType=BIGINT},
+      course_id = #{courseId,jdbcType=BIGINT},
+      collection_time = #{collectionTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

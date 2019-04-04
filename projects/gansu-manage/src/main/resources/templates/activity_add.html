@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<title>活动新增</title>
+		<div th:replace="/common/publicX-admin :: onloadJS">
+
+		</div>
+	</head>
+	<style>
+		.layui-input{
+			width: 250px!important;
+		}
+		
+		.layui-form-item{
+			margin: 40px 0;
+		}
+		
+	</style>
+	<body>
+		<p class="name">你好：<span>管理员</span></p>
+		<div class="activity">
+			<div class="activi_herd">
+				<p class="p1">活动新增</p>
+				<p class="p2">返回</p>
+			</div>
+			<div class="activi_one">
+				<div class="one_left" style="margin-top: 40px;">
+					<div class="layui-form-item">
+    					<label class="layui-form-label">活动名称</label>
+	    				<div class="layui-input-block">
+	      				<input type="text"  placeholder="请输入活动名称"  class="layui-input" id="name">
+	   					</div>
+  					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">开始时间</label>	
+							<div class="layui-inline">
+		  						<input type="text" class="layui-input" id="test1"  readonly="readonly">
+							</div>
+					</div>						
+
+					<div class="layui-form-item layui-form-text">
+	    				<label class="layui-form-label">活动类容</label>
+	    				<div class="layui-input-block">
+	      					<textarea name="desc" placeholder="请输入内容" class="layui-textarea" id="text"></textarea>
+	    				</div>
+		  			</div>		
+							
+				</div>
+
+				 <div class="one_right" style="margin-top: 40px;">
+					<div class="layui-form-item">
+    					<label class="layui-form-label">活动地点</label>
+	    				<div class="layui-input-block">
+	      				<input type="text"  placeholder="请输入活动地点"  class="layui-input" id="dps">
+	   					</div>
+  					</div>
+					 <div class="layui-form-item">
+						 <label class="layui-form-label">结束时间</label>
+						 <div class="layui-inline">
+							 <input type="text" class="layui-input" id="test2"  readonly="readonly">
+						 </div>
+					 </div>
+					<!--<div class="layui-form-item">
+						<label class="layui-form-label">最大人数</label>	
+							<div class="num">
+		  						<p class="p1 jian">-</p>
+		  						<input type="text" id="nums" value="0">
+		  						<p class="p3 jia">+</p>
+							</div>
+					</div>	-->
+					<div class="layui-form-item">
+    					<label class="layui-form-label">活动发起人</label>
+	    				<div class="layui-input-block">
+	      				<input type="text"  placeholder="请输入发起人"  class="layui-input" id="people">
+	   					</div>
+  					</div>
+					<!--<div class="layui-form-item">
+    					<label class="layui-form-label">发起人号码</label>
+	    				<div class="layui-input-block">
+	      				<input type="text"  placeholder="请输入号码"  class="layui-input" id="photo">
+	   					</div>
+  					</div>-->
+  					
+				</div>
+				
+				
+			</div>
+			
+			<div class="activi_btn">
+				<p class="p1">取消</p>
+				<p class="p2">新增</p>
+			</div>
+		</div>
+
+		<script>
+			layui.use('laydate', function(){
+			  var laydate = layui.laydate;
+			  
+			  //执行一个laydate实例
+			  laydate.render({
+			    elem: '#test1' //开始时间
+			  });
+			  laydate.render({
+			    elem: '#test2' //结束时间
+			  });
+
+			});
+		</script>
+
+	<script>
+		$('.activi_btn').click(function () {
+
+			$.ajax({
+				type: "post",
+				url: "/admin/activity/add",
+				data:{
+					activityName:$('#name').val(),
+					sponsor:$('#people').val(),
+					address:$('#gps').val(),
+					startTime:$('#test1').val(),
+					endTime:$('#test2').val(),
+					contentText:$('#text').val(),
+				},
+				async: false,
+				success: function(data){
+					if(data.code==1){
+						layer.msg(data.data);
+						setTimeout(function () {
+							window.parent.location.reload()
+						},1000);
+
+						return;
+					}
+					layer.msg('新增失败');
+				},
+				error:function () {
+					layer.msg(data.data);
+					console.log('error');
+				}
+			})
+
+		})
+
+	</script>
+		<script>
+			$('.activi_btn .p1').click(function () {
+				window.parent.location.reload()
+			})
+
+			$('.activi_herd .p2').click(function () {
+				window.parent.location.reload()
+			})
+		</script>
+	</body>
+</html>

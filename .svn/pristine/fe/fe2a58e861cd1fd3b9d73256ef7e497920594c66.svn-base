@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>新闻资讯修改</title>
+		<link rel="stylesheet" href="../static/css/global.css" />
+		<link rel="stylesheet" href="../static/css/index.css" />
+		<link rel="stylesheet" href="../static/layui/css/layui.css" />
+	</head>
+	<body>
+		<p class="name">你好：<span>管理员</span></p>
+		<div class="new_add">
+			<div class="herds">
+				<p class="p1">新闻资讯修改</p>
+				<p class="p2">返回</p>
+			</div>
+			<div class="new_main">
+					<div class="layui-form-item">
+    					<label class="layui-form-label">资源标题</label>
+    						<div class="layui-input-block">
+      							<input type="text" placeholder="不超过20个字" class="layui-input" style="width: 40%;margin-top: 20px;">
+    						</div>
+  					</div>
+  					
+  					<div class="layui-form-item layui-form-text">
+    					<label class="layui-form-label">资源简介</label>
+    						<div class="layui-input-block">
+      							<textarea  placeholder="请输入资源简介" class="layui-textarea" style="width: 40%;margin-top: 20px;"></textarea>
+    						</div>
+  					</div>
+  					
+  					<div class="layui-form-item" id="addCommodityIndex">
+    					<label class="layui-form-label">资源封面</label>
+    						<div class="layui-input-block img" id="preview" style="width: 200px;height: 200px;">
+    							 
+      							<img id="imghead"  src="" style="width: 100%;height: 100%;" onclick="$('#previewImg').click();">
+    						</div>
+    						<input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
+  					</div>
+			</div>
+			<div class="new_max">
+				<form id="addForm">
+	    			<div id="editor">
+	        			<p>请输入活动类容</p>
+	    			</div>
+				</form>	
+			</div>
+			<div class="news_three">
+				<p class="p1">取消</p>
+				<p class="p2">修改</p>
+			</div>
+		</div>
+		<script type="text/javascript" src="../static/js/jquery-3.3.1.min.js" ></script>
+		
+		<script type="text/javascript" src="../static/js/wangEditor.min.js" ></script>
+		<script src="https://cdn.bootcss.com/js-xss/0.3.3/xss.js"></script>
+		<script type="text/javascript">
+		    var E = window.wangEditor;
+		    var editor = new E('#editor');
+		
+		    // var html = editor.txt.html();
+		    // var filterHtml = filterXSS(html);  // 此处进行 xss 攻击过滤
+		
+		    //开启debug模式
+		    editor.customConfig.debug = true;
+		    // 关闭粘贴内容中的样式
+		    editor.customConfig.pasteFilterStyle = false;
+		    // 忽略粘贴内容中的图片
+		    editor.customConfig.pasteIgnoreImg = true;
+		    // 使用 base64 保存图片
+		    //editor.customConfig.uploadImgShowBase64 = true
+		
+		    // 上传图片到服务器
+		    editor.customConfig.uploadFileName = 'myfile'; //设置文件上传的参数名称
+		    editor.customConfig.uploadImgServer = '/upload/editor/img'; //设置上传文件的服务器路径
+		    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
+		
+		
+		    //自定义上传图片事件
+		    editor.customConfig.uploadImgHooks = {
+		        before : function(xhr, editor, files) {
+		
+		        },
+		        success : function(xhr, editor, result) {
+		            console.log("上传成功");
+		        },
+		        fail : function(xhr, editor, result) {
+		            console.log("上传失败,原因是"+result);
+		        },
+		        error : function(xhr, editor) {
+		            console.log("上传出错");
+		        },
+		        timeout : function(xhr, editor) {
+		            console.log("上传超时");
+		        }
+		    };
+		    editor.create()
+		</script>
+		<script>
+			//图片上传预览    IE是用了滤镜。
+			function previewImage(file) {
+				var MAXWIDTH = 90;
+				var MAXHEIGHT = 90;
+				var div = document.getElementById('preview');
+				if(file.files && file.files[0]) {
+					div.innerHTML = '<img id=imghead onclick=$("#previewImg").click()>';
+					var img = document.getElementById('imghead');
+					img.onload = function() {
+						var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+						img.width = 200;
+						img.height = 200;
+						//                 img.style.marginLeft = rect.left+'px';
+						img.style.marginTop = 0 + 'px';
+					}
+					var reader = new FileReader();
+					reader.onload = function(evt) {
+						img.src = evt.target.result;
+					}
+					reader.readAsDataURL(file.files[0]);
+				} else //兼容IE
+				{
+					var sFilter = 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+					file.select();
+					var src = document.selection.createRange().text;
+					div.innerHTML = '<img id=imghead>';
+					var img = document.getElementById('imghead');
+					img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+					var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+					status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
+					div.innerHTML = "<div id=divhead style='width:" + rect.width + "px;height:" + rect.height + "px;margin-top:" + rect.top + "px;" + sFilter + src + "\"'></div>";
+				}
+			}
+
+			function clacImgZoomParam(maxWidth, maxHeight, width, height) {
+				var param = {
+					top: 0,
+					left: 0,
+					width: width,
+					height: height
+				};
+				if(width > maxWidth || height > maxHeight) {
+					rateWidth = width / maxWidth;
+					rateHeight = height / maxHeight;
+
+					if(rateWidth > rateHeight) {
+						param.width = maxWidth;
+						param.height = Math.round(height / rateWidth);
+					} else {
+						param.width = Math.round(width / rateHeight);
+						param.height = maxHeight;
+					}
+				}
+				param.left = Math.round((maxWidth - param.width) / 2);
+				param.top = Math.round((maxHeight - param.height) / 2);
+				return param;
+			}
+		</script>
+	</body>
+</html>
